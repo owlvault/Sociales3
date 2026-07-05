@@ -34,7 +34,10 @@ const TEMAS = [
     {p:"Continente", d:"Una gran extensión de tierra rodeada por agua."},
     {p:"Planeta", d:"Un cuerpo enorme y redondo que gira en el espacio, como la Tierra."}
   ],
-  video: { id: "pSZAOV-yBTE", titulo: "El Planeta Tierra - Happy Learning" },
+  video: { id: "CsPnOFqTyK0", titulo: "El Planeta Tierra - Happy Learning" },
+  enlaces: [
+    { url: "https://spaceplace.nasa.gov/all-about-earth/sp/", texto: "Todo sobre la Tierra en NASA Space Place" }
+  ],
   tarjetas:[
     {e:"🌐", t:"Se ve azul desde el espacio", x:"Si miras la Tierra desde muy lejos, se ve azul. Eso pasa porque el AGUA cubre casi tres partes de cuatro del planeta. ¡Por eso la llaman el Planeta Azul!"},
     {e:"🌊", t:"Los 5 océanos", x:"El agua salada forma 5 océanos: Pacífico, Atlántico, Índico, Ártico y Antártico. El Pacífico es el más grande de todos."},
@@ -64,7 +67,10 @@ const TEMAS = [
     {p:"Puerto", d:"Un lugar en la costa donde llegan y salen los barcos."},
     {p:"Manglar", d:"Un bosque especial que crece en la orilla del mar, con árboles de raíces largas."}
   ],
-  video: { id: "G2OQAO5jFm4", titulo: "Paisajes de Costa - Smile and Learn" },
+  video: { id: "28reAl0zJUA", titulo: "Paisajes de Costa - Smile and Learn" },
+  enlaces: [
+    { url: "https://www.fundacionaquae.org/wiki/por-que-el-mar-es-azul/", texto: "¿Por qué el mar es azul? (Fundación Aquae)" }
+  ],
   tarjetas:[
     {e:"🏖️", t:"¿Qué es una costa?", x:"La costa es la orilla, el borde donde la tierra toca el mar. Allí hay playas, rocas y a veces manglares."},
     {e:"🎣", t:"La pesca", x:"Muchas familias de la costa viven de la pesca: salen en botes a atrapar peces y mariscos para vender y comer."},
@@ -90,7 +96,10 @@ const TEMAS = [
     {p:"Plástico", d:"Un material que tarda muchísimos años en desaparecer y daña a los animales del mar."},
     {p:"Reciclar", d:"Volver a usar los materiales para no botar tanta basura."}
   ],
-  video: { id: "TV-YEQOIFuQ", titulo: "Contaminación del Agua - Happy Learning" },
+  video: { id: "yOGqpFOO2Dk", titulo: "Contaminación del Agua - Happy Learning" },
+  enlaces: [
+    { url: "https://spaceplace.nasa.gov/ocean-currents/sp/", texto: "Las corrientes oceánicas y cómo cuidarlas (NASA)" }
+  ],
   tarjetas:[
     {e:"🛍️", t:"El problema del plástico", x:"Mucha basura llega al mar, sobre todo plástico. Las tortugas confunden las bolsas con comida y se enferman."},
     {e:"🛢️", t:"Agua sucia", x:"Cuando cae aceite o basura al mar, el agua se contamina y los peces y las aves pueden morir."},
@@ -120,7 +129,10 @@ const TEMAS = [
     {p:"Desventaja", d:"Algo difícil o no tan bueno de una situación."},
     {p:"Interior", d:"La parte de un país que está lejos del mar."}
   ],
-  video: { id: "R_C2bOEDoSA", titulo: "Los Pisos Térmicos de Colombia" },
+  video: { id: "Q5pph-St3us", titulo: "Los Pisos Térmicos de Colombia" },
+  enlaces: [
+    { url: "https://enciclopedia.banrepcultural.org/index.php/Clima_de_Colombia", texto: "Aprende más sobre el clima de Colombia (Banrepcultural)" }
+  ],
   tarjetas:[
     {e:"🌴", t:"Vivir en la costa", x:"Cerca del mar hace calor casi siempre, hay playas, pesca fresca y turismo. Pero a veces hay tormentas fuertes."},
     {e:"🏔️", t:"Vivir en el interior", x:"Lejos del mar, como en Bogotá, el clima puede ser más frío. Hay montañas, cultivos y ciudades grandes."},

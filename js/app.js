@@ -683,6 +683,20 @@ function pintaCierre(){
       <div class="estrellas-ganadas">${estrHtml}</div>
       <p>${estrellas===3?'¡Increíble, puntaje perfecto!':estrellas===2?'¡Muy buen trabajo!':'¡Lo lograste! Cada día aprendes más.'}</p>
       ${insigniaNueva?`<div class="insignia-nueva"><div class="med">🏅</div><b>¡Nueva insignia!</b><br>${esc(insigniaNueva.insignia)}<br><small>Completaste la Unidad ${uni}</small></div>`:''}
+      
+      ${d.tipo !== 'repaso' && getTema(d.temaId).enlaces ? `
+      <div class="enlaces-extra" style="margin-top:20px; text-align:left; background:var(--bg); padding:16px; border-radius:14px;">
+        <h4 style="margin:0 0 10px; color:var(--primario-osc);">🚀 ¡Explora más por tu cuenta!</h4>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          ${getTema(d.temaId).enlaces.map(e => `
+            <li><a href="${esc(e.url)}" target="_blank" style="display:flex; align-items:center; gap:8px; color:var(--tinta); text-decoration:none; font-weight:700; background:#fff; padding:10px 14px; border-radius:10px; border:1px solid var(--linea); transition:transform 0.2s;">
+              <span>🔗</span> <span>${esc(e.texto)}</span>
+            </a></li>
+          `).join('')}
+        </ul>
+      </div>
+      ` : ''}
+
       <div class="acciones" style="flex-direction:column;gap:10px;margin-top:22px">
         ${idx<79?`<button class="btn-grande acento" onclick="ir(iniciarSesion, ${idx+1})">➡️ Siguiente misión</button>`:`<div class="tarjeta" style="box-shadow:none"><h3>🏆 ¡Completaste toda la aventura!</h3><p>Eres una gran exploradora del planeta.</p></div>`}
         <button class="btn-sec" onclick="ir(renderMapa)">🗺️ Ver mi mapa</button>
