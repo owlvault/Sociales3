@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#2a9dd6">
+<title>Exploradora del Planeta · Sociales 3°</title>
+<meta name="description" content="Aventura de Ciencias Sociales para grado 3° — HomeSchool Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <header class="topbar" id="topbar">
+    <div class="marca">🌍 <span>Exploradora</span></div>
+    <div class="crece"></div>
+    <div class="chip estrellas" id="chipEstrellas" title="Estrellas">⭐ <span id="numEstrellas">0</span></div>
+    <div class="chip racha" id="chipRacha" title="Días seguidos">🔥 <span id="numRacha">0</span></div>
+    <button class="icon-btn" id="btnAjustes" title="Ajustes (adultos)" aria-label="Ajustes">⚙️</button>
+  </header>
+
+  <!-- Aquí se pinta cada vista -->
+  <main id="app" class="pantalla"></main>
+
+  <!-- Temporizador flotante de foco (aparece durante la clase) -->
+  <div class="foco-flotante oculto" id="foco">
+    <span class="anillo">⏱️</span>
+    <div><span id="focoTiempo">40:00</span><br><small>tiempo de hoy</small></div>
+  </div>
+
+  <!-- Panel de ajustes / zona de adultos -->
+  <div class="hoja oculto" id="hojaAjustes">
+    <div class="caja">
+      <h2>⚙️ Panel de acompañamiento</h2>
+
+      <div class="ajuste">
+        <div class="crece"><b>🔊 Leer en voz alta</b><br><small>Botón para escuchar cada pantalla</small></div>
+        <div class="switch on" id="swVoz" data-set="voz"><i></i></div>
+      </div>
+      <div class="ajuste">
+        <div class="crece"><b>🌙 Modo bajo estímulo</b><br><small>Colores más suaves, menos brillo</small></div>
+        <div class="switch" id="swCalma" data-set="calma"><i></i></div>
+      </div>
+      <div class="ajuste">
+        <div class="crece"><b>🍃 Reducir movimiento</b><br><small>Quita animaciones</small></div>
+        <div class="switch" id="swReduce" data-set="reduce"><i></i></div>
+      </div>
+      <div class="ajuste">
+        <div class="crece"><b>⏸️ Pausas activas</b><br><small>Descanso para moverse a mitad de la clase</small></div>
+        <div class="switch on" id="swPausas" data-set="pausas"><i></i></div>
+      </div>
+
+      <h2 style="margin-top:1.4rem">📊 Progreso</h2>
+      <div class="barra-progreso"><i id="barraAjustes"></i></div>
+      <table class="mini-tabla" id="tablaProgreso"></table>
+
+      <p class="nota-adultos" id="notaPiar"></p>
+
+      <div class="acciones" style="justify-content:space-between; margin-top:20px">
+        <button class="btn-sec" id="btnReiniciar">↺ Reiniciar progreso</button>
+        <button class="btn-grande" id="btnCerrarAjustes" style="font-size:1rem;padding:12px 22px">Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/curriculum.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
