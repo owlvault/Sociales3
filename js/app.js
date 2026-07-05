@@ -13,6 +13,7 @@ const porDefecto = {
   estrellas:0, racha:0, ultimoDia:null,
   dias:{},           // { idxDia: estrellas(1-3) }
   insignias:[],      // números de unidad ganados
+  xp: 0, nivel: 1,   // Gamificación
   ajustes:{ voz:true, calma:false, reduce:false, pausas:true }
 };
 const clon = o => JSON.parse(JSON.stringify(o));   // clon simple (compatible con navegadores antiguos)
@@ -59,20 +60,46 @@ window.hablarTexto = b => hablar(b.getAttribute('data-t'));
 function actualizarTopbar(){
   const numE = $('#numEstrellas');
   const numR = $('#numRacha');
+  const numN = $('#numNivel');
+  const numXP = $('#numXP');
+  const barraXP = $('#barraXP');
   
-  if (numE.textContent != estado.estrellas) {
+  if (numE && numE.textContent != estado.estrellas) {
     $('#chipEstrellas').classList.remove('changed');
     void $('#chipEstrellas').offsetWidth; // force reflow
     $('#chipEstrellas').classList.add('changed');
   }
-  if (numR.textContent != estado.racha) {
+  if (numR && numR.textContent != estado.racha) {
     $('#chipRacha').classList.remove('changed');
     void $('#chipRacha').offsetWidth; // force reflow
     $('#chipRacha').classList.add('changed');
   }
 
-  numE.textContent = estado.estrellas;
-  numR.textContent = estado.racha;
+  if(numE) numE.textContent = estado.estrellas;
+  if(numR) numR.textContent = estado.racha;
+  if(numN) numN.textContent = estado.nivel;
+  if(numXP) numXP.textContent = estado.xp;
+  
+  // Calcular progreso al siguiente nivel (ej: cada 100 XP es un nivel)
+  if(barraXP) {
+    const xpBase = (estado.nivel - 1) * 100;
+    const xpSiguiente = estado.nivel * 100;
+    const progreso = ((estado.xp - xpBase) / (xpSiguiente - xpBase)) * 100;
+    barraXP.style.width = Math.min(100, Math.max(0, progreso)) + '%';
+  }
+}
+
+// Función para ganar XP
+function ganarXP(cantidad) {
+  estado.xp += cantidad;
+  const nivelNuevo = Math.floor(estado.xp / 100) + 1;
+  if (nivelNuevo > estado.nivel) {
+    estado.nivel = nivelNuevo;
+    hablar(`¡Felicidades! Subiste al nivel ${estado.nivel}`);
+    confeti();
+  }
+  guardar();
+  actualizarTopbar();
 }
 
 function confeti(){
@@ -237,8 +264,13 @@ function iniciarSesion(idx){
   const d=PLAN[idx];
   const steps=[];
   steps.push({t:'intro'});
+  const tema=getTema(d.temaId);
+  
+  if(tema.video) {
+    steps.push({t:'video'});
+  }
+
   if(d.tipo==='descubrir'){
-    const tema=getTema(d.temaId);
     tema.tarjetas.forEach((c,k)=> steps.push({t:'tarjeta', k}));
     if(estado.ajustes.pausas) steps.push({t:'pausa'});
     steps.push({t:'vocab'});
@@ -289,6 +321,7 @@ function mostrarPaso(){
   window.scrollTo(0,0); callar();
   const p=pasoActual(), d=sesion.d, tema=getTema(d.temaId);
   if(p.t==='intro') return pintaIntro(d,tema);
+  if(p.t==='video') return pintaVideo(tema);
   if(p.t==='tarjeta') return pintaTarjeta(tema, p.k);
   if(p.t==='vocab') return pintaVocab(tema);
   if(p.t==='pausa') return pintaPausa();
@@ -316,6 +349,20 @@ function pintaIntro(d,tema){
       <div class="acciones"><button class="btn-grande" onclick="avanzar()">¡Vamos! 👉</button></div>
     </div>`;
 }
+
+/* --- Video de Youtube Curado --- */
+function pintaVideo(tema) {
+  app.innerHTML = cabeceraSesion() + `
+    <div class="tarjeta">
+      <span class="etiqueta">Cine Explorador 🍿</span>
+      <h3>${esc(tema.video.titulo)}</h3>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/${tema.video.id}?rel=0&showinfo=0" allowfullscreen></iframe>
+      </div>
+      <div class="acciones"><button class="btn-grande" onclick="avanzar()">Ya vi el video 👉</button></div>
+    </div>`;
+}
+
 
 /* --- Tarjeta de enseñanza (una idea por pantalla) --- */
 function pintaTarjeta(tema, k){
@@ -432,7 +479,7 @@ function actQuiz(preguntas, tema, esReto){
       </div>`;
     window.respQuiz=(b)=>{
       const elegido=+b.dataset.i, ok=elegido===q.c;
-      sesion.intentos++; if(ok){ ac++; sesion.aciertos++; }
+      sesion.intentos++; if(ok){ ac++; sesion.aciertos++; ganarXP(10); }
       document.querySelectorAll('#ops .opcion').forEach(op=>{ op.disabled=true;
         const oi=+op.dataset.i; if(oi===q.c)op.classList.add('correcta'); else if(oi===elegido)op.classList.add('incorrecta'); });
       const fb=$('#fb');
@@ -464,7 +511,7 @@ function actVF(items, tema){
         <div id="fb"></div>
       </div>`;
     window.respVF=(r)=>{
-      const ok=r===it.v; sesion.intentos++; if(ok){ac++;sesion.aciertos++;}
+      const ok=r===it.v; sesion.intentos++; if(ok){ac++;sesion.aciertos++; ganarXP(10);}
       document.querySelectorAll('#vfb .vf-btn').forEach(b=>b.disabled=true);
       $('#fb').innerHTML=`<div class="mascota-burbuja ${ok?'bien':'ups'}"><span class="cara">${ok?'😃':'🧭'}</span><p>${(ok?'¡Sí! ':'Era '+(it.v?'Verdadero':'Falso')+'. ')+esc(it.exp)}</p></div>
         <div class="acciones"><button class="btn-grande" onclick="sigVF()">${qi<items.length-1?'Siguiente 👉':'Terminar ✅'}</button></div>`;
@@ -483,52 +530,103 @@ function actEmparejar(pr, tema){
   app.innerHTML = cabeceraSesion() + `
     <div class="tarjeta">
       <span class="etiqueta">✏️ Emparejar</span>
-      <h3>${esc(pr.instruccion||'Une cada pareja')}</h3>
+      <h3>${esc(pr.instruccion||'Arrastra cada palabra hacia su pareja correcta')}</h3>
       <div class="empareja">
-        <div><div class="col-tit">Toca aquí</div>${izq.map(x=>`<div class="pieza izq" data-id="${x.id}" onclick="selIzq(this)">${esc(x.txt)}</div>`).join('')}</div>
-        <div><div class="col-tit">…su pareja</div>${der.map(x=>`<div class="pieza der" data-id="${x.id}" onclick="selDer(this)">${esc(x.txt)}</div>`).join('')}</div>
+        <div>
+          <div class="col-tit">Arrastra de aquí...</div>
+          ${izq.map(x=>`<div class="pieza izq arrastrable" draggable="true" data-id="${x.id}" ondragstart="arrastrarIzq(event, this)" ondragend="finArrastre(event, this)">${esc(x.txt)}</div>`).join('')}
+        </div>
+        <div>
+          <div class="col-tit">...hasta aquí</div>
+          ${der.map(x=>`<div class="pieza der zona-drop" data-id="${x.id}" ondragover="permitirDrop(event)" ondragenter="entraDrop(event, this)" ondragleave="saleDrop(event, this)" ondrop="soltarDer(event, this)">${esc(x.txt)}</div>`).join('')}
+        </div>
       </div>
       <div id="fb"></div>
     </div>`;
-  window.selIzq=(el)=>{ if(el.classList.contains('listo'))return; document.querySelectorAll('.izq').forEach(e=>e.classList.remove('sel')); el.classList.add('sel'); sel=el; };
-  window.selDer=(el)=>{
-    if(el.classList.contains('listo')||!sel)return;
+
+  window.arrastrarIzq = (e, el) => {
+    if(el.classList.contains('listo')){ e.preventDefault(); return; }
+    e.dataTransfer.setData('text/plain', el.dataset.id);
+    setTimeout(()=>el.classList.add('dragging'), 0);
+    sel = el;
+  };
+  window.finArrastre = (e, el) => { el.classList.remove('dragging'); };
+  window.permitirDrop = e => e.preventDefault();
+  window.entraDrop = (e, el) => { if(!el.classList.contains('listo')) el.classList.add('drag-over'); };
+  window.saleDrop = (e, el) => el.classList.remove('drag-over');
+
+  window.soltarDer = (e, el) => {
+    e.preventDefault();
+    el.classList.remove('drag-over');
+    if(el.classList.contains('listo') || !sel) return;
+    const idArrastrado = e.dataTransfer.getData('text/plain');
     sesion.intentos++;
-    if(el.dataset.id===sel.dataset.id){ el.classList.add('listo'); sel.classList.add('listo'); sel.classList.remove('sel'); sel=null; hechos++; sesion.aciertos++;
-      if(hechos===pr.pares.length){ confeti();
+    if(el.dataset.id === idArrastrado){ 
+      el.classList.add('listo'); sel.classList.add('listo'); 
+      sel.classList.remove('arrastrable'); sel.removeAttribute('draggable'); 
+      sel=null; hechos++; sesion.aciertos++; ganarXP(10);
+      if(hechos===pr.pares.length){ confeti(); ganarXP(20);
         $('#fb').innerHTML=`<div class="mascota-burbuja bien"><span class="cara">🎉</span><p>¡Todas las parejas correctas!</p></div>
           <div class="acciones"><button class="btn-grande" onclick="finActividad(${(pr.pares.length/(pr.pares.length+fallos)).toFixed(3)})">Terminar ✅</button></div>`;
         hablar('¡Muy bien! Todas las parejas correctas.'); }
-    } else { fallos++; el.classList.add('incorrecta'); setTimeout(()=>el.classList.remove('incorrecta'),500);
-      $('#fb').innerHTML=`<div class="mascota-burbuja ups"><span class="cara">🧭</span><p>${elige(ANIMOS_UPS)}</p></div>`; }
+    } else { 
+      fallos++; el.classList.add('incorrecta'); setTimeout(()=>el.classList.remove('incorrecta'),500);
+      $('#fb').innerHTML=`<div class="mascota-burbuja ups"><span class="cara">🧭</span><p>${elige(ANIMOS_UPS)}</p></div>`; 
+    }
   };
 }
 
 /* Ordenar: mover con flechas y comprobar */
 function actOrdenar(pr, tema){
   let orden = barajar(pr.items.map((t,i)=>({t, ok:i})));
+  let arrastradoIdx = null;
+
   const pinta=()=>{
     app.innerHTML = cabeceraSesion() + `
       <div class="tarjeta">
         <span class="etiqueta">✏️ Ordenar</span>
         <h3>${esc(pr.pregunta)}</h3>
+        <p style="color:var(--tinta-suave); font-size:0.9rem;">(Arrastra los elementos para ordenarlos)</p>
         <div class="ordenar-lista">
-          ${orden.map((x,i)=>`<div class="orden-item"><span>${esc(x.t)}</span>
-            <span class="flechas">
-              <button onclick="mover(${i},-1)" ${i===0?'disabled style=opacity:.3':''}>▲</button>
-              <button onclick="mover(${i},1)" ${i===orden.length-1?'disabled style=opacity:.3':''}>▼</button>
-            </span></div>`).join('')}
+          ${orden.map((x,i)=>`
+            <div class="orden-item arrastrable zona-drop" draggable="true" data-idx="${i}" 
+                 ondragstart="iniciarArrastreOrden(event, ${i}, this)" 
+                 ondragover="permitirDropOrden(event)" 
+                 ondragenter="entraDropOrden(event, this)" 
+                 ondragleave="saleDropOrden(event, this)" 
+                 ondrop="soltarOrden(event, ${i}, this)"
+                 ondragend="finArrastreOrden(event, this)">
+              <span>${esc(x.t)}</span>
+              <span class="flechas" style="opacity:0.3">↕️</span>
+            </div>`).join('')}
         </div>
         <div class="acciones"><button class="btn-grande" onclick="comprobarOrden()">Comprobar ✅</button></div>
         <div id="fb"></div>
       </div>`;
   };
-  window.mover=(i,dir)=>{ const j=i+dir; if(j<0||j>=orden.length)return; [orden[i],orden[j]]=[orden[j],orden[i]]; pinta(); };
+
+  window.iniciarArrastreOrden = (e, i, el) => { arrastradoIdx = i; setTimeout(()=>el.classList.add('dragging'), 0); };
+  window.finArrastreOrden = (e, el) => { el.classList.remove('dragging'); };
+  window.permitirDropOrden = e => e.preventDefault();
+  window.entraDropOrden = (e, el) => el.classList.add('drag-over');
+  window.saleDropOrden = (e, el) => el.classList.remove('drag-over');
+  
+  window.soltarOrden = (e, dropIdx, el) => {
+    e.preventDefault();
+    el.classList.remove('drag-over');
+    if (arrastradoIdx === null || arrastradoIdx === dropIdx) return;
+    // Intercambiar (o insertar)
+    const item = orden.splice(arrastradoIdx, 1)[0];
+    orden.splice(dropIdx, 0, item);
+    arrastradoIdx = null;
+    pinta();
+  };
+
   window.comprobarOrden=()=>{
     sesion.intentos++;
     const bien = orden.reduce((n,x,i)=> n + (x.ok===i?1:0), 0);
     const frac = bien/orden.length; const perfecto = bien===orden.length;
-    if(perfecto) sesion.aciertos++;
+    if(perfecto){ sesion.aciertos++; ganarXP(30); }
     if(perfecto)confeti();
     $('#fb').innerHTML=`<div class="mascota-burbuja ${perfecto?'bien':'ups'}"><span class="cara">${perfecto?'🎉':'🧭'}</span>
       <p>${perfecto?'¡Orden perfecto!':'Acertaste '+bien+' de '+orden.length+'. ¡Ajusta y sigamos!'}</p></div>
