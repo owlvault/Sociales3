@@ -67,7 +67,7 @@ const TEMAS = [
     {p:"Puerto", d:"Un lugar en la costa donde llegan y salen los barcos."},
     {p:"Manglar", d:"Un bosque especial que crece en la orilla del mar, con árboles de raíces largas."}
   ],
-  video: { id: "nN4M7KkS8jA", titulo: "Los Accidentes Geográficos - Smile and Learn" },
+  video: { id: "nOl9y1OeL9k", titulo: "Los Accidentes Geográficos - Smile and Learn" },
   enlaces: [
     { url: "https://www.fundacionaquae.org/wiki/por-que-el-mar-es-azul/", texto: "¿Por qué el mar es azul? (Fundación Aquae)" }
   ],
