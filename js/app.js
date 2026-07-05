@@ -48,14 +48,22 @@ const $ = s => document.querySelector(s);
 const barajar = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
 const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-function hablar(texto){
-  if(!estado.ajustes.voz || !('speechSynthesis' in window)) return;
-  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(texto);
-    u.lang='es-ES'; u.rate=0.95; u.pitch=1.05; speechSynthesis.speak(u); }catch(e){}
+window._ultimaVoz = null;
+function hablar(texto, forzar = false){
+  if((!estado.ajustes.voz && !forzar) || !('speechSynthesis' in window)) return;
+  try { 
+    speechSynthesis.cancel(); 
+    const u = new SpeechSynthesisUtterance(texto);
+    u.lang = 'es'; // Usar español genérico para evitar fallos de idioma
+    u.rate = 0.95; 
+    u.pitch = 1.05; 
+    window._ultimaVoz = u; // Prevenir recolección de basura prematura en Chrome
+    speechSynthesis.speak(u); 
+  } catch(e) {}
 }
 function callar(){ try{ speechSynthesis.cancel(); }catch(e){} }
 function botonLeer(texto){ return `<button class="leer" onclick='hablarTexto(this)' data-t="${esc(texto).replace(/"/g,'&quot;')}">🔊 Escuchar</button>`; }
-window.hablarTexto = b => hablar(b.getAttribute('data-t'));
+window.hablarTexto = b => hablar(b.getAttribute('data-t'), true);
 
 function actualizarTopbar(){
   const numE = $('#numEstrellas');
