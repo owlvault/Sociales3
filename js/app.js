@@ -314,7 +314,7 @@ function iniciarSesion(idx){
   steps.push({t:'intro'});
   const tema=getTema(d.temaId);
   
-  if(tema.video) {
+  if(tema.video && d.tipo === 'descubrir') {
     steps.push({t:'video'});
   }
 
