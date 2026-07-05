@@ -57,17 +57,86 @@ function botonLeer(texto){ return `<button class="leer" onclick='hablarTexto(thi
 window.hablarTexto = b => hablar(b.getAttribute('data-t'));
 
 function actualizarTopbar(){
-  $('#numEstrellas').textContent = estado.estrellas;
-  $('#numRacha').textContent = estado.racha;
+  const numE = $('#numEstrellas');
+  const numR = $('#numRacha');
+  
+  if (numE.textContent != estado.estrellas) {
+    $('#chipEstrellas').classList.remove('changed');
+    void $('#chipEstrellas').offsetWidth; // force reflow
+    $('#chipEstrellas').classList.add('changed');
+  }
+  if (numR.textContent != estado.racha) {
+    $('#chipRacha').classList.remove('changed');
+    void $('#chipRacha').offsetWidth; // force reflow
+    $('#chipRacha').classList.add('changed');
+  }
+
+  numE.textContent = estado.estrellas;
+  numR.textContent = estado.racha;
 }
 
 function confeti(){
   if(estado.ajustes.reduce) return;
-  const col=['#2a9dd6','#ffb020','#3fae5a','#d64c8a','#7b57c2'];
-  for(let i=0;i<60;i++){ const c=document.createElement('div'); c.className='confeti';
-    c.style.left=Math.random()*100+'vw'; c.style.background=col[i%col.length];
-    c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
-    document.body.appendChild(c); setTimeout(()=>c.remove(),3200); }
+  const col=['#2a9dd6','#ffb020','#3fae5a','#d64c8a','#7b57c2', '#ff5722', '#00bcd4'];
+  const emojis = ['⭐','✨','🎉','🚀','🎈'];
+  for(let i=0;i<80;i++){ 
+    const c=document.createElement('div'); 
+    c.className='confeti';
+    
+    // Mitad colores, mitad emojis
+    if (i % 2 === 0) {
+      c.style.background=col[i%col.length];
+    } else {
+      c.innerText = emojis[i%emojis.length];
+      c.style.background = 'transparent';
+      c.style.fontSize = (Math.random()*1.5 + 1) + 'rem';
+    }
+
+    c.style.left=(Math.random()*100)+'vw'; 
+    c.style.animationDuration=(1.2+Math.random()*2)+'s'; 
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    
+    // Añadir rotación extra para más dinamismo
+    c.style.setProperty('--rot-end', (Math.random() * 720 - 360) + 'deg');
+    document.body.appendChild(c); 
+    setTimeout(()=>c.remove(),3200); 
+  }
+}
+
+/* Guardar y Cargar a Archivo (JSON local) */
+function exportarProgreso() {
+  const data = JSON.stringify(estado, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `aventura_sociales3_${HOY()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  hablar('¡Aventura guardada en tu compu!');
+}
+
+function importarProgreso(evento) {
+  const file = evento.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const j = JSON.parse(e.target.result);
+      if (j && typeof j === 'object') {
+        estado = Object.assign({}, clon(porDefecto), j, {ajustes:Object.assign({},porDefecto.ajustes,(j&&j.ajustes)||{})});
+        guardar();
+        actualizarTopbar();
+        $('#hojaAjustes').classList.add('oculto');
+        ir(renderInicio);
+        hablar('¡Aventura cargada! Listos para seguir explorando.');
+        confeti();
+      }
+    } catch (err) {
+      alert('Hubo un problema al cargar el archivo. ¿Es el archivo correcto?');
+    }
+  };
+  reader.readAsText(file);
 }
 
 /* Mascota: reacciones (una brújula/globo amistoso, sin género de "diagnóstico") */
@@ -548,7 +617,6 @@ function abrirAjustes(){
     filas+=`<tr><td>${UNIDADES[u-1].emoji} Unidad ${u}: ${esc(UNIDADES[u-1].titulo)}</td><td>${c}/${dias.length}${estado.insignias.includes(u)?' 🏅':''}</td></tr>`;
   }
   $('#tablaProgreso').innerHTML=filas;
-  $('#notaPiar').innerHTML = `<b>Para el adulto acompañante:</b> esta app aplica apoyos tipo PIAR — segmentación en pasos cortos, anticipación de la meta, refuerzo positivo inmediato, apoyo visual y de audio, y pausas activas. Sesión sugerida: <b>40 min, 5 días/semana</b>. Si el día rinde poco, basta con una unidad menos: lo importante es la constancia, no la velocidad.`;
   aplicarAjustes();
   $('#hojaAjustes').classList.remove('oculto');
 }
@@ -566,8 +634,14 @@ function init(){
   $('#btnAjustes').addEventListener('click', abrirAjustes);
   $('#btnCerrarAjustes').addEventListener('click',()=> $('#hojaAjustes').classList.add('oculto'));
   $('#hojaAjustes').addEventListener('click',e=>{ if(e.target.id==='hojaAjustes') $('#hojaAjustes').classList.add('oculto'); });
+  
+  // Archivos
+  $('#btnGuardarArchivo').addEventListener('click', exportarProgreso);
+  $('#btnCargarArchivo').addEventListener('click', () => $('#inputArchivo').click());
+  $('#inputArchivo').addEventListener('change', importarProgreso);
+
   $('#btnReiniciar').addEventListener('click',()=>{
-    if(confirm('¿Seguro que quieres borrar todo el progreso y empezar de nuevo?')){
+    if(confirm('¿Seguro que quieres borrar todo el progreso y empezar de nuevo tu viaje mágico?')){
       const aj=estado.ajustes; estado=clon(porDefecto); estado.ajustes=aj; guardar(); actualizarTopbar(); $('#hojaAjustes').classList.add('oculto'); ir(renderInicio);
     }
   });

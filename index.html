@@ -14,13 +14,12 @@
 </head>
 <body>
 
-  <!-- Barra superior -->
   <header class="topbar" id="topbar">
     <div class="marca">🌍 <span>Exploradora</span></div>
     <div class="crece"></div>
-    <div class="chip estrellas" id="chipEstrellas" title="Estrellas">⭐ <span id="numEstrellas">0</span></div>
-    <div class="chip racha" id="chipRacha" title="Días seguidos">🔥 <span id="numRacha">0</span></div>
-    <button class="icon-btn" id="btnAjustes" title="Ajustes (adultos)" aria-label="Ajustes">⚙️</button>
+    <div class="chip estrellas pulse-on-change" id="chipEstrellas" title="Tus estrellas mágicas">⭐ <span id="numEstrellas">0</span></div>
+    <div class="chip racha bounce-on-change" id="chipRacha" title="Días seguidos de aventura">🔥 <span id="numRacha">0</span></div>
+    <button class="icon-btn btn-ajustes" id="btnAjustes" title="Mi Mochila Mágica" aria-label="Ajustes">🎒</button>
   </header>
 
   <!-- Aquí se pinta cada vista -->
@@ -32,37 +31,42 @@
     <div><span id="focoTiempo">40:00</span><br><small>tiempo de hoy</small></div>
   </div>
 
-  <!-- Panel de ajustes / zona de adultos -->
+  <!-- Panel de mochila / ajustes invisibles para TDAH -->
   <div class="hoja oculto" id="hojaAjustes">
-    <div class="caja">
-      <h2>⚙️ Panel de acompañamiento</h2>
+    <div class="caja glass-panel">
+      <h2>🎒 Mi Mochila Mágica</h2>
 
       <div class="ajuste">
-        <div class="crece"><b>🔊 Leer en voz alta</b><br><small>Botón para escuchar cada pantalla</small></div>
+        <div class="crece"><b>🔊 Guía de Voz</b><br><small>El explorador te leerá las misiones</small></div>
         <div class="switch on" id="swVoz" data-set="voz"><i></i></div>
       </div>
       <div class="ajuste">
-        <div class="crece"><b>🌙 Modo bajo estímulo</b><br><small>Colores más suaves, menos brillo</small></div>
+        <div class="crece"><b>🌙 Modo Zen</b><br><small>Para súper concentración máxima</small></div>
         <div class="switch" id="swCalma" data-set="calma"><i></i></div>
       </div>
       <div class="ajuste">
-        <div class="crece"><b>🍃 Reducir movimiento</b><br><small>Quita animaciones</small></div>
+        <div class="crece"><b>🍃 Modo Ninja</b><br><small>Menos animaciones, más velocidad</small></div>
         <div class="switch" id="swReduce" data-set="reduce"><i></i></div>
       </div>
       <div class="ajuste">
-        <div class="crece"><b>⏸️ Pausas activas</b><br><small>Descanso para moverse a mitad de la clase</small></div>
+        <div class="crece"><b>⚡ Mini-Retos Sorpresa</b><br><small>¡Retos físicos para ganar energía!</small></div>
         <div class="switch on" id="swPausas" data-set="pausas"><i></i></div>
       </div>
 
-      <h2 style="margin-top:1.4rem">📊 Progreso</h2>
+      <h2 style="margin-top:1.4rem">📊 Tu Camino de Explorador</h2>
       <div class="barra-progreso"><i id="barraAjustes"></i></div>
       <table class="mini-tabla" id="tablaProgreso"></table>
 
-      <p class="nota-adultos" id="notaPiar"></p>
+      <h2 style="margin-top:1.4rem">💾 Guardar mi Aventura</h2>
+      <div class="acciones-archivos">
+        <button class="btn-sec btn-accion" id="btnGuardarArchivo">⬇️ Guardar en mi compu</button>
+        <button class="btn-sec btn-accion" id="btnCargarArchivo">⬆️ Cargar mi avance</button>
+        <input type="file" id="inputArchivo" accept=".json" class="oculto">
+      </div>
 
-      <div class="acciones" style="justify-content:space-between; margin-top:20px">
-        <button class="btn-sec" id="btnReiniciar">↺ Reiniciar progreso</button>
-        <button class="btn-grande" id="btnCerrarAjustes" style="font-size:1rem;padding:12px 22px">Listo</button>
+      <div class="acciones" style="justify-content:space-between; margin-top:20px; padding-top:20px; border-top:2px dashed var(--linea)">
+        <button class="btn-peligro" id="btnReiniciar">↺ Empezar de cero</button>
+        <button class="btn-grande pulse-anim" id="btnCerrarAjustes" style="font-size:1rem;padding:12px 22px">Cerrar mochila</button>
       </div>
     </div>
   </div>
