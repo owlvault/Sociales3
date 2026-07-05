@@ -1,0 +1,135 @@
+/* Caja Misteriosa */
+.caja-misteriosa {
+  background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
+  border-radius: 20px;
+  padding: 40px 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(255, 154, 158, 0.4);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.5rem;
+  user-select: none;
+  transition: transform 0.1s, background 0.3s;
+}
+.caja-misteriosa:active { transform: scale(0.95); }
+.caja-misteriosa.toque-1 { background: linear-gradient(135deg, #fecfef 0%, #a18cd1 100%); box-shadow: 0 8px 16px rgba(161, 140, 209, 0.4); }
+.caja-misteriosa.toque-2 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); box-shadow: 0 8px 16px rgba(251, 194, 235, 0.4); animation: shake 0.4s; }
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@keyframes popOut {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.tarjeta-revelada {
+  animation: popOut 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Burbujas Vocabulario */
+.burbujas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.burbuja {
+  background: var(--primario);
+  color: white;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+  user-select: none;
+}
+.burbuja:active { transform: scale(0.9); }
+.burbuja.reventada {
+  background: var(--bg);
+  color: var(--tinta);
+  border: 2px solid var(--primario);
+  border-radius: 14px;
+  width: 100%;
+  text-align: left;
+  transform: scale(1);
+  box-shadow: none;
+  cursor: default;
+  animation: popOut 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.burbuja.reventada b { color: var(--primario-osc); display: block; font-size: 1.1em; }
+
+/* Slider Sabias Que */
+.slider-container {
+  margin: 30px 0;
+  background: #eaf6fd;
+  border-radius: 50px;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+.slider-track {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--primario), #a18cd1);
+  width: 60px; /* matches thumb size */
+  border-radius: 50px;
+}
+.slider-thumb {
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 52px; height: 52px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex; justify-content: center; align-items: center;
+  font-size: 24px;
+  cursor: grab;
+  z-index: 2;
+  touch-action: none;
+}
+.slider-thumb:active { cursor: grabbing; }
+.slider-text {
+  position: absolute;
+  width: 100%;
+  line-height: 60px;
+  text-align: center;
+  color: var(--primario-osc);
+  font-weight: 800;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Carga Repaso */
+.btn-carga {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.1s;
+}
+.btn-carga:active {
+  transform: scale(0.95);
+}
+.carga-progreso {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: rgba(0,0,0,0.15);
+  width: 0%;
+  pointer-events: none;
+}

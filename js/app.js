@@ -51,19 +51,59 @@ const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 window._ultimaVoz = null;
 function hablar(texto, forzar = false){
   if((!estado.ajustes.voz && !forzar) || !('speechSynthesis' in window)) return;
-  try { 
-    speechSynthesis.cancel(); 
+  
+  try {
+    // Si el motor de voz se quedó pausado/atascado, reanudarlo
+    if (speechSynthesis.paused) speechSynthesis.resume();
+    // Cancelar cualquier locución anterior en curso
+    if (speechSynthesis.speaking) speechSynthesis.cancel();
+  } catch(e) {}
+  
+  // No usar setTimeout aquí porque los navegadores requieren que el speak()
+  // se llame sincrónicamente en el contexto del evento click (user gesture).
+  try {
     const u = new SpeechSynthesisUtterance(texto);
-    u.lang = 'es'; // Usar español genérico para evitar fallos de idioma
     u.rate = 0.95; 
     u.pitch = 1.05; 
-    window._ultimaVoz = u; // Prevenir recolección de basura prematura en Chrome
-    speechSynthesis.speak(u); 
-  } catch(e) {}
+    u.lang = 'es-ES'; // Idioma por defecto seguro
+    
+    // Intentar forzar la mejor voz en español disponible
+    const voces = speechSynthesis.getVoices();
+    if (voces && voces.length > 0) {
+      const vozIdeal = voces.find(v => v.lang === 'es-CO') || 
+                       voces.find(v => v.lang === 'es-MX') || 
+                       voces.find(v => v.lang === 'es-ES') ||
+                       voces.find(v => v.lang.startsWith('es'));
+      if (vozIdeal) {
+        u.voice = vozIdeal;
+        u.lang = vozIdeal.lang;
+      }
+    }
+
+    window._ultimaVoz = u; // Prevenir recolección de basura prematura (bug Chrome)
+    u.onend = () => { window._ultimaVoz = null; };
+    u.onerror = (e) => { window._ultimaVoz = null; console.error("Error voz:", e); };
+    
+    speechSynthesis.speak(u);
+  } catch(e) {
+    console.error("Error reproduciendo audio:", e);
+  }
 }
 function callar(){ try{ speechSynthesis.cancel(); }catch(e){} }
 function botonLeer(texto){ return `<button class="leer" onclick='hablarTexto(this)' data-t="${esc(texto).replace(/"/g,'&quot;')}">🔊 Escuchar</button>`; }
-window.hablarTexto = b => hablar(b.getAttribute('data-t'), true);
+
+window.hablarTexto = b => {
+  // Pequeña animación visual para confirmar el clic
+  const originalBg = b.style.backgroundColor;
+  b.style.backgroundColor = '#bce0fd';
+  b.style.transform = 'scale(0.92)';
+  setTimeout(() => {
+    b.style.backgroundColor = originalBg;
+    b.style.transform = '';
+  }, 200);
+
+  hablar(b.getAttribute('data-t'), true);
+};
 
 function actualizarTopbar(){
   const numE = $('#numEstrellas');
@@ -372,57 +412,218 @@ function pintaVideo(tema) {
 }
 
 
-/* --- Tarjeta de enseñanza (una idea por pantalla) --- */
+/* --- Tarjeta de enseñanza (Caja Misteriosa) --- */
 function pintaTarjeta(tema, k){
   const c=tema.tarjetas[k], total=tema.tarjetas.length;
   app.innerHTML = cabeceraSesion() + `
-    <div class="tarjeta">
+    <div class="tarjeta" id="tarjetaContenedor">
       <span class="etiqueta">Aprendo · ${k+1} de ${total}</span>
-      <div class="grande-emoji">${c.e}</div>
-      <h3>${esc(c.t)}</h3>
-      <p>${esc(c.x)}</p>
-      ${botonLeer(c.t+'. '+c.x)}
-      <div class="acciones"><button class="btn-grande" onclick="avanzar()">Siguiente 👉</button></div>
+      
+      <div id="cajaMisteriosa" class="caja-misteriosa" onclick="tocarCaja()">
+        <div style="font-size:4rem; margin-bottom:10px;">🎁</div>
+        <div>¡Toca 3 veces para abrir!</div>
+      </div>
+
+      <div id="contenidoTarjeta" style="display:none;" class="tarjeta-revelada">
+        <div class="grande-emoji">${c.e}</div>
+        <h3>${esc(c.t)}</h3>
+        <p>${esc(c.x)}</p>
+        ${botonLeer(c.t+'. '+c.x)}
+        <div class="acciones"><button class="btn-grande" onclick="avanzar()">Siguiente 👉</button></div>
+      </div>
     </div>`;
+    
+    let toques = 0;
+    window.tocarCaja = () => {
+      toques++;
+      const caja = $('#cajaMisteriosa');
+      if (toques === 1) { caja.classList.add('toque-1'); }
+      if (toques === 2) { caja.classList.add('toque-2'); }
+      if (toques >= 3) {
+        caja.style.display = 'none';
+        $('#contenidoTarjeta').style.display = 'block';
+        confeti();
+        ganarXP(5);
+      }
+    };
 }
 
-/* --- Vocabulario clave --- */
+/* --- Vocabulario clave (Burbujas) --- */
 function pintaVocab(tema){
+  let reventadas = 0;
   app.innerHTML = cabeceraSesion() + `
     <div class="tarjeta">
       <span class="etiqueta">Palabras mágicas ✨</span>
-      <h3>Palabras para recordar</h3>
-      <div class="vocab-lista">
-        ${tema.vocab.map(v=>`<div class="vocab-item"><b>${esc(v.p)}:</b> ${esc(v.d)}</div>`).join('')}
+      <h3>¡Explota las burbujas para descubrir su significado!</h3>
+      <div class="burbujas-container">
+        ${tema.vocab.map((v, i) => `
+          <div class="burbuja" id="burbuja-${i}" onclick="reventarBurbuja(${i}, '${esc(v.d).replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">
+            ${esc(v.p)}
+          </div>
+        `).join('')}
       </div>
-      ${botonLeer(tema.vocab.map(v=>v.p+': '+v.d).join('. '))}
-      <div class="acciones"><button class="btn-grande" onclick="avanzar()">¡Lo tengo! 👉</button></div>
+      <div class="acciones" id="btnVocab" style="display:none; margin-top:20px;">
+        <button class="btn-grande" onclick="avanzar()">¡Lo tengo! 👉</button>
+      </div>
     </div>`;
+
+  window.reventarBurbuja = (i, definicion) => {
+    const b = $(`#burbuja-${i}`);
+    if(b.classList.contains('reventada')) return;
+    b.classList.add('reventada');
+    b.innerHTML = `<b>${b.textContent}</b> ${definicion}`;
+    reventadas++;
+    if(reventadas === tema.vocab.length) {
+      $('#btnVocab').style.display = 'block';
+      confeti();
+      ganarXP(10);
+    }
+  };
 }
 
-/* --- Repaso rápido (día de practicar): 2 tarjetas clave --- */
+/* --- Repaso rápido (Carga de energía) --- */
 function pintaRepasoRapido(tema){
   const cs=tema.tarjetas.slice(0,2);
   app.innerHTML = cabeceraSesion() + `
     <div class="tarjeta">
       <span class="etiqueta">Recordemos 🧠</span>
       <h3>${esc(tema.titulo)}</h3>
-      ${cs.map(c=>`<p style="margin:.6rem 0"><span style="font-size:1.4rem">${c.e}</span> ${esc(c.x)}</p>`).join('')}
-      ${botonLeer(cs.map(c=>c.x).join('. '))}
-      <div class="acciones"><button class="btn-grande" onclick="avanzar()">Continuar 👉</button></div>
+      
+      <div id="cajaRepaso">
+        <p style="color:var(--tinta-suave); font-size:1.1rem">Para recordar, necesitas recargar tu energía neuronal.</p>
+        <button class="btn-grande btn-carga" id="btnCarga" style="width:100%; margin-top:20px; font-size:1.2rem; padding:20px;">
+          <div class="carga-progreso" id="cargaProgreso"></div>
+          <span style="position:relative; z-index:2">Mantén presionado 2 seg</span>
+        </button>
+      </div>
+
+      <div id="contenidoRepaso" style="display:none;" class="tarjeta-revelada">
+        ${cs.map(c=>`<p style="margin:.6rem 0"><span style="font-size:1.4rem">${c.e}</span> ${esc(c.x)}</p>`).join('')}
+        ${botonLeer(cs.map(c=>c.x).join('. '))}
+        <div class="acciones"><button class="btn-grande" onclick="avanzar()">Continuar 👉</button></div>
+      </div>
     </div>`;
+
+  setTimeout(() => {
+    const btn = $('#btnCarga');
+    const prog = $('#cargaProgreso');
+    if(!btn) return;
+    
+    let holdTimer = null;
+    let progress = 0;
+    
+    const stopHold = () => {
+      clearInterval(holdTimer);
+      if(progress < 100) {
+        progress = 0;
+        prog.style.width = '0%';
+      }
+    };
+    
+    const startHold = (e) => {
+      // Evitar que el long-press de móviles abra un menú
+      if (e.cancelable) e.preventDefault();
+      clearInterval(holdTimer);
+      holdTimer = setInterval(() => {
+        progress += 5;
+        prog.style.width = `${progress}%`;
+        if (progress >= 100) {
+          clearInterval(holdTimer);
+          $('#cajaRepaso').style.display = 'none';
+          $('#contenidoRepaso').style.display = 'block';
+          confeti();
+          ganarXP(10);
+        }
+      }, 100);
+    };
+
+    btn.addEventListener('mousedown', startHold);
+    btn.addEventListener('touchstart', startHold, {passive: false});
+    window.addEventListener('mouseup', stopHold);
+    window.addEventListener('touchend', stopHold);
+  }, 100);
 }
 
-/* --- ¿Sabías que? --- */
+/* --- ¿Sabías que? (Slider) --- */
 function pintaSabias(tema){
   app.innerHTML = cabeceraSesion() + `
     <div class="tarjeta">
       <span class="etiqueta">¿Sabías que…? 🤯</span>
       <div class="grande-emoji">💡</div>
-      <p style="font-size:1.2rem">${esc(tema.sabias)}</p>
-      ${botonLeer('¿Sabías que? '+tema.sabias)}
-      <div class="acciones"><button class="btn-grande" onclick="avanzar()">¡Genial! 👉</button></div>
+      <h3>¡Desliza el cohete para revelar el secreto!</h3>
+      
+      <div class="slider-container" id="sliderContainer">
+        <div class="slider-track" id="sliderTrack"></div>
+        <div class="slider-text">Desliza ➔</div>
+        <div class="slider-thumb" id="sliderThumb">🚀</div>
+      </div>
+
+      <div id="secretoSabias" style="display:none;" class="tarjeta-revelada">
+        <p style="font-size:1.2rem">${esc(tema.sabias)}</p>
+        ${botonLeer('¿Sabías que? '+tema.sabias)}
+        <div class="acciones"><button class="btn-grande" onclick="avanzar()">¡Genial! 👉</button></div>
+      </div>
     </div>`;
+
+  setTimeout(() => {
+    const thumb = $('#sliderThumb');
+    const track = $('#sliderTrack');
+    const container = $('#sliderContainer');
+    if(!thumb) return;
+    
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+    const maxScroll = container.offsetWidth - thumb.offsetWidth;
+
+    const onStart = (e) => {
+      isDragging = true;
+      startX = (e.touches ? e.touches[0].clientX : e.clientX) - currentX;
+    };
+    
+    const onMove = (e) => {
+      if(!isDragging) return;
+      // Prevenir el scroll de la pagina si arrastramos
+      if (e.cancelable) e.preventDefault(); 
+      let x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+      if (x < 0) x = 0;
+      if (x > maxScroll) x = maxScroll;
+      currentX = x;
+      thumb.style.transform = `translateX(${x}px)`;
+      track.style.width = `${x + thumb.offsetWidth}px`;
+
+      if (x >= maxScroll * 0.95) {
+        isDragging = false;
+        container.style.display = 'none';
+        $('#secretoSabias').style.display = 'block';
+        confeti();
+        ganarXP(5);
+      }
+    };
+    
+    const onEnd = () => {
+      if(!isDragging) return;
+      isDragging = false;
+      if (currentX < maxScroll * 0.95) {
+        currentX = 0;
+        thumb.style.transform = `translateX(0px)`;
+        thumb.style.transition = 'transform 0.3s';
+        track.style.width = `${thumb.offsetWidth}px`;
+        track.style.transition = 'width 0.3s';
+        setTimeout(() => {
+          thumb.style.transition = '';
+          track.style.transition = '';
+        }, 300);
+      }
+    };
+
+    thumb.addEventListener('mousedown', onStart);
+    thumb.addEventListener('touchstart', onStart, {passive: true});
+    window.addEventListener('mousemove', onMove, {passive: false});
+    window.addEventListener('touchmove', onMove, {passive: false});
+    window.addEventListener('mouseup', onEnd);
+    window.addEventListener('touchend', onEnd);
+  }, 100);
 }
 
 /* --- Pausa activa (movimiento, respiración) --- */
