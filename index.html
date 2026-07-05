@@ -3,19 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#2a9dd6">
+<meta name="theme-color" content="#1a1a2e">
 <title>Exploradora del Planeta · Sociales 3°</title>
-<meta name="description" content="Aventura de Ciencias Sociales para grado 3° — HomeSchool Colombia.">
+<meta name="description" content="Aventura interactiva de Ciencias Sociales para grado 3° — HomeSchool Colombia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<!-- Fuentes modernas y legibles -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/disruptive.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
 </head>
 <body>
 
-  <header class="topbar" id="topbar">
+  <!-- Fondo animado espacial/natural -->
+  <div class="animated-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="topbar glass-panel" id="topbar">
     <div class="marca">🌍 <span>Exploradora</span></div>
     
     <!-- Barra de Nivel y XP (Nueva Gamificación) -->
@@ -31,6 +39,12 @@
     <button class="icon-btn btn-ajustes" id="btnAjustes" title="Mi Mochila Mágica" aria-label="Ajustes">🎒</button>
   </header>
 
+  <!-- Avatar / Compañero interactivo -->
+  <div id="avatar-container" class="avatar-container">
+    <div id="avatar" class="avatar-idle">🧑‍🚀</div>
+    <div id="avatar-bubble" class="avatar-bubble oculto">¡Hola explorador!</div>
+  </div>
+
   <!-- Aquí se pinta cada vista -->
   <main id="app" class="pantalla"></main>
 
@@ -42,7 +56,7 @@
 
   <!-- Panel de mochila / ajustes invisibles para TDAH -->
   <div class="hoja oculto" id="hojaAjustes">
-    <div class="caja glass-panel">
+    <div class="caja glass-panel-dark">
       <h2>🎒 Mi Mochila Mágica</h2>
 
       <div class="ajuste">
@@ -80,6 +94,9 @@
     </div>
   </div>
 
+  <!-- API de YouTube (se carga dinámicamente o aquí) -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  
   <script src="js/curriculum.js"></script>
   <script src="js/app.js"></script>
 </body>

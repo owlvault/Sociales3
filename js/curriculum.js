@@ -34,15 +34,16 @@ const TEMAS = [
     {p:"Continente", d:"Una gran extensión de tierra rodeada por agua."},
     {p:"Planeta", d:"Un cuerpo enorme y redondo que gira en el espacio, como la Tierra."}
   ],
-  video: { id: "CsPnOFqTyK0", titulo: "El Planeta Tierra - Happy Learning" },
+  
+  manualidad: {"titulo":"Planeta de Plastilina","materiales":["Plastilina azul","Plastilina verde"],"pasos":["Haz una bola grande con la plastilina azul.","Amasa trocitos de plastilina verde y pégalos sobre la bola azul simulando los continentes.","Compara tu planeta con una foto de la Tierra real."]},video: { id: "CsPnOFqTyK0", titulo: "El Planeta Tierra - Happy Learning" },
   enlaces: [
     { url: "https://spaceplace.nasa.gov/all-about-earth/sp/", texto: "Todo sobre la Tierra en NASA Space Place" }
   ],
   tarjetas:[
-    {e:"🌐", t:"Se ve azul desde el espacio", x:"Si miras la Tierra desde muy lejos, se ve azul. Eso pasa porque el AGUA cubre casi tres partes de cuatro del planeta. ¡Por eso la llaman el Planeta Azul!"},
-    {e:"🌊", t:"Los 5 océanos", x:"El agua salada forma 5 océanos: Pacífico, Atlántico, Índico, Ártico y Antártico. El Pacífico es el más grande de todos."},
-    {e:"🗺️", t:"Los continentes", x:"La tierra firme forma los continentes: América, Europa, Asia, África, Oceanía y la Antártida. ¡Nosotros vivimos en América!"},
-    {e:"🇨🇴", t:"Colombia y el mar", x:"Colombia es especial: tiene costa en DOS océanos. El océano Pacífico y el mar Caribe, que es parte del océano Atlántico."}
+    {e:"🌐", t:"Planeta Azul", x:"La Tierra se ve azul desde el espacio porque el **AGUA** cubre casi todo el planeta.", modo:"mantener"},
+    {e:"🌊", t:"Los 5 océanos", x:"El agua forma 5 océanos. El **Pacífico** es el más grande de todos.", modo:"tocar"},
+    {e:"🗺️", t:"Los continentes", x:"La tierra firme forma 6 continentes. ¡Nosotros vivimos en **América**!", modo:"mantener"},
+    {e:"🇨🇴", t:"Colombia y el mar", x:"Colombia tiene costa en **DOS** océanos: el Pacífico y el mar Caribe.", modo:"tocar"}
   ],
   sabias:"¡El océano Pacífico es tan grande que cabrían todos los continentes juntos dentro de él!",
   descubrir:{tipo:"quiz", preguntas:[
@@ -67,15 +68,16 @@ const TEMAS = [
     {p:"Puerto", d:"Un lugar en la costa donde llegan y salen los barcos."},
     {p:"Manglar", d:"Un bosque especial que crece en la orilla del mar, con árboles de raíces largas."}
   ],
-  video: { id: "nOl9y1OeL9k", titulo: "Los Accidentes Geográficos - Smile and Learn" },
+  
+  manualidad: {"titulo":"Mi Playa de Arena Casera","materiales":["Una caja de zapatos (tapa)","Arena o pan rallado","Papel azul","Piedritas o conchas"],"pasos":["Pega el papel azul en una mitad de la tapa para hacer el mar.","Pon la arena en la otra mitad para hacer la playa.","Decora la orilla con las piedritas o conchitas que tengas."]},video: { id: "nOl9y1OeL9k", titulo: "Los Accidentes Geográficos - Smile and Learn" },
   enlaces: [
     { url: "https://www.fundacionaquae.org/wiki/por-que-el-mar-es-azul/", texto: "¿Por qué el mar es azul? (Fundación Aquae)" }
   ],
   tarjetas:[
-    {e:"🏖️", t:"¿Qué es una costa?", x:"La costa es la orilla, el borde donde la tierra toca el mar. Allí hay playas, rocas y a veces manglares."},
-    {e:"🎣", t:"La pesca", x:"Muchas familias de la costa viven de la pesca: salen en botes a atrapar peces y mariscos para vender y comer."},
-    {e:"🚢", t:"Los puertos", x:"En los puertos llegan barcos enormes con mercancías. En Colombia, Buenaventura y Cartagena son puertos muy importantes."},
-    {e:"🐠", t:"Vida en el borde del mar", x:"En las costas viven cangrejos, tortugas, aves y peces. Los manglares son la casa de muchos animalitos pequeños."}
+    {e:"🏖️", t:"¿Qué es una costa?", x:"La costa es la **orilla** donde la tierra toca el mar.", modo:"mantener"},
+    {e:"🎣", t:"La pesca", x:"Las familias de la costa viven de **atrapar peces** en el mar.", modo:"tocar"},
+    {e:"🚢", t:"Los puertos", x:"Allí llegan barcos enormes. **Buenaventura** y **Cartagena** son puertos importantes.", modo:"mantener"},
+    {e:"🐠", t:"Vida en el borde", x:"En las costas viven cangrejos, aves y peces. Los **manglares** son su casa.", modo:"tocar"}
   ],
   sabias:"En los manglares nacen muchos peces bebés que se esconden entre las raíces hasta que crecen.",
   descubrir:{tipo:"quiz", preguntas:[
@@ -96,7 +98,8 @@ const TEMAS = [
     {p:"Plástico", d:"Un material que tarda muchísimos años en desaparecer y daña a los animales del mar."},
     {p:"Reciclar", d:"Volver a usar los materiales para no botar tanta basura."}
   ],
-  video: { id: "yOGqpFOO2Dk", titulo: "Contaminación del Agua - Happy Learning" },
+  
+  manualidad: {"titulo":"El Filtro de Agua Mágico","materiales":["Un embudo o botella cortada","Algodón","Arena","Agua con un poco de tierra"],"pasos":["Pon el algodón en el fondo del embudo y luego la arena encima.","Echa el agua sucia poco a poco sobre la arena.","¡Observa cómo el agua sale mucho más limpia por debajo!"]},video: { id: "yOGqpFOO2Dk", titulo: "Contaminación del Agua - Happy Learning" },
   enlaces: [
     { url: "https://spaceplace.nasa.gov/ocean-currents/sp/", texto: "Las corrientes oceánicas y cómo cuidarlas (NASA)" }
   ],
@@ -129,7 +132,8 @@ const TEMAS = [
     {p:"Desventaja", d:"Algo difícil o no tan bueno de una situación."},
     {p:"Interior", d:"La parte de un país que está lejos del mar."}
   ],
-  video: { id: "Q5pph-St3us", titulo: "Los Pisos Térmicos de Colombia" },
+  
+  manualidad: {"titulo":"Pirámide de los Pisos Térmicos","materiales":["Cartón o cartulina","Tijeras","Colores o marcadores"],"pasos":["Recorta un triángulo grande de cartón para simular una montaña.","Dibuja 4 líneas horizontales para dividirla en pisos térmicos.","Dibuja en la parte de abajo cosas de calor (playa, vacas) y en la punta hielo o nieve."]},video: { id: "Q5pph-St3us", titulo: "Los Pisos Térmicos de Colombia" },
   enlaces: [
     { url: "https://enciclopedia.banrepcultural.org/index.php/Clima_de_Colombia", texto: "Aprende más sobre el clima de Colombia (Banrepcultural)" }
   ],
@@ -159,7 +163,8 @@ const TEMAS = [
     {p:"Renovable", d:"Recurso que se puede volver a tener, como el agua o los árboles, si lo cuidamos."},
     {p:"No renovable", d:"Recurso que se acaba y no vuelve, como el petróleo o el oro."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Caja de Tesoros Naturales","materiales":["Caja pequeña","Hojas secas","Piedras","Palitos"],"pasos":["Sal al parque o jardín y recolecta 5 elementos de la naturaleza.","Guárdalos en tu caja y clasifícalos: ¿Cuáles vienen de plantas? ¿Cuáles son minerales?","Decora la caja y ponle el nombre 'Mis Recursos Naturales'."]},tarjetas:[
     {e:"🌳", t:"Regalos de la naturaleza", x:"Los recursos naturales son cosas que la naturaleza nos da: agua, aire, suelo, plantas, animales y minerales."},
     {e:"♻️", t:"Recursos renovables", x:"Algunos recursos se renuevan: el agua, el viento, el sol y los bosques. Si los cuidamos, no se acaban."},
     {e:"⛏️", t:"Recursos no renovables", x:"Otros se acaban y no vuelven, como el petróleo, el oro o el carbón. Por eso hay que usarlos con cuidado."},
@@ -188,7 +193,8 @@ const TEMAS = [
     {p:"Agricultura", d:"Sembrar y cosechar alimentos de la tierra."},
     {p:"Comercio", d:"Comprar y vender productos."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Juego de Roles: El Mercado","materiales":["Juguetes o alimentos de la cocina","Papelitos (para dinero)"],"pasos":["Arma una pequeña tienda en tu cuarto con los objetos.","Juega con alguien de tu familia: uno será el vendedor (sector terciario) y otro el comprador.","Usa los papelitos como dinero para comprar."]},tarjetas:[
     {e:"🌾", t:"Sacar de la naturaleza", x:"Algunos trabajos toman cosas de la naturaleza: la agricultura (cultivar), la ganadería (criar animales), la pesca y la minería."},
     {e:"🏭", t:"Fabricar cosas", x:"En las fábricas se transforman las cosas: con la leche hacen queso, con el algodón hacen ropa. Eso es la industria."},
     {e:"🏪", t:"Dar servicios", x:"Otros trabajos ayudan a las personas: los médicos, los profesores, los tenderos y los conductores. Son los servicios y el comercio."},
@@ -213,7 +219,8 @@ const TEMAS = [
     {p:"Cooperar", d:"Trabajar juntos para lograr algo."},
     {p:"Oficio", d:"El trabajo que una persona sabe hacer."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"El Sombrero del Trabajador","materiales":["Papel periódico o cartulina","Cinta","Marcadores"],"pasos":["Arma un gorro de papel (como un barco de papel grande).","Escribe en el frente el nombre de la profesión que te gustaría tener de grande.","Póntelo y actúa como si estuvieras haciendo ese trabajo."]},tarjetas:[
     {e:"🔨", t:"Herramientas que ayudan", x:"Para trabajar mejor usamos herramientas: la pala para cavar, la red para pescar, el tractor para el campo."},
     {e:"👨‍👩‍👧‍👦", t:"Trabajar en equipo", x:"Muchos trabajos se hacen entre varios. Cuando cooperamos, todo sale más rápido y mejor."},
     {e:"📋", t:"Organizarse", x:"Las personas se reparten las tareas: uno siembra, otro riega, otro vende. Así aprovechan bien los recursos."},
@@ -242,7 +249,8 @@ const TEMAS = [
     {p:"Piso térmico", d:"El clima según la altura: hace más frío en las montañas altas y más calor abajo."},
     {p:"Cosecha", d:"Recoger los alimentos que se sembraron."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Menú del Clima","materiales":["Una hoja de papel","Colores"],"pasos":["Dobla la hoja por la mitad.","De un lado dibuja una comida perfecta para un día de mucho frío (ej. sopa caliente).","Del otro lado dibuja una comida para un día de mucho calor (ej. helado o ensalada)."]},tarjetas:[
     {e:"🌡️", t:"Climas diferentes", x:"En Colombia hay clima caliente, templado y frío. Depende de qué tan alto esté el lugar en las montañas."},
     {e:"🍌", t:"Clima caliente", x:"En tierra caliente crecen banano, coco, mango, cacao y arroz. ¡Frutas ricas y dulces!"},
     {e:"🥔", t:"Clima frío", x:"En tierra fría, en las montañas altas, crecen la papa, el trigo y las fresas."},
@@ -268,7 +276,8 @@ const TEMAS = [
     {p:"Paisaje", d:"Todo lo que vemos en un lugar: montañas, ríos, casas, árboles."},
     {p:"Natural", d:"Que lo hace la naturaleza, sin las personas."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Álbum del Antes y Después","materiales":["Fotos viejas de tu familia o ciudad","Papel","Pegante"],"pasos":["Elige una foto de cómo eras de bebé y otra de cómo eres ahora.","Pégalas en el papel y escribe 3 cosas que han cambiado.","Pregúntale a un adulto cómo era la ciudad antes y escríbelo."]},tarjetas:[
     {e:"⏰", t:"Todo cambia", x:"Los lugares no son siempre iguales. Un potrero puede volverse un barrio, y un río puede cambiar de camino."},
     {e:"🌋", t:"Cambios naturales", x:"La naturaleza cambia el paisaje: la lluvia, los ríos, los volcanes y el viento moldean la tierra poco a poco."},
     {e:"👷", t:"Cambios hechos por personas", x:"Las personas también cambiamos el territorio: construimos casas, carreteras, puentes y ciudades."},
@@ -297,7 +306,8 @@ const TEMAS = [
     {p:"Infraestructura", d:"Las obras que sirven a todos: vías, puentes, acueductos, colegios."},
     {p:"Vía", d:"Un camino o carretera por donde se transita."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Construyendo mi Ciudad","materiales":["Cajas de medicinas vacías","Rollos de papel higiénico","Pegante"],"pasos":["Usa las cajas como edificios y los rollos como fábricas o torres.","Pega todo sobre un cartón formando una mini-ciudad.","Dibuja carreteras conectando tus edificios."]},tarjetas:[
     {e:"🛣️", t:"Caminos que conectan", x:"Las carreteras y puentes unen a los pueblos. Así podemos viajar y llevar productos de un lugar a otro."},
     {e:"🏫", t:"Obras para todos", x:"Los colegios, hospitales, parques y acueductos ayudan a que la comunidad viva mejor."},
     {e:"🏢", t:"Las ciudades crecen", x:"Cuando llega más gente, se construyen más casas y edificios. La ciudad crece y cambia."},
@@ -322,7 +332,8 @@ const TEMAS = [
     {p:"Migrar", d:"Cambiarse a vivir de un lugar a otro."},
     {p:"Ciudad", d:"Un lugar grande con muchas personas, casas y edificios."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Censo Familiar","materiales":["Hoja de papel","Lápiz"],"pasos":["Escribe el nombre de todas las personas que viven en tu casa.","Cuenta cuántos hombres y cuántas mujeres hay.","Haz un dibujo de tu familia y escribe el número total grande al lado."]},tarjetas:[
     {e:"📈", t:"La población cambia", x:"En un lugar pueden vivir cada vez más personas, o a veces menos. La población no es siempre igual."},
     {e:"🚚", t:"Del campo a la ciudad", x:"Muchas familias se van del campo a la ciudad buscando trabajo, estudio o mejores oportunidades."},
     {e:"🏙️", t:"Ciudades que crecen", x:"Por eso las ciudades crecen mucho: llega gente de muchos lugares a vivir en ellas."},
@@ -351,7 +362,8 @@ const TEMAS = [
     {p:"Solución", d:"Una idea o acción para arreglar un problema."},
     {p:"Comunidad", d:"Un grupo de personas que viven juntas y se ayudan."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Basurero Clasificador","materiales":["3 cajas o bolsas pequeñas","Papelitos pintados (verde, negro, blanco)"],"pasos":["Marca las 3 bolsas con los colores de reciclaje: Verde (orgánico), Negro (no aprovechable), Blanco (reciclable).","Busca 3 basuras pequeñas en tu casa (limpias) y mételas en la bolsa correcta.","¡Felicidades! Eres un guardián del medio ambiente."]},tarjetas:[
     {e:"🪓", t:"Cuando se cortan los bosques", x:"Si cortamos demasiados árboles, los animales pierden su casa y el aire se vuelve menos limpio."},
     {e:"🏭", t:"Contaminación", x:"El humo de fábricas y carros, y la basura en los ríos, ensucian el aire y el agua de todos."},
     {e:"🤝", t:"Problemas de la gente", x:"A veces, al crecer una ciudad, falta trabajo o vivienda para todos. Son problemas sociales que hay que resolver juntos."},
@@ -377,7 +389,8 @@ const TEMAS = [
     {p:"Historia", d:"Todo lo que pasó antes y podemos conocer."},
     {p:"Museo", d:"Un lugar donde se guardan y muestran objetos antiguos y valiosos."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Arte Rupestre en Casa","materiales":["Café instantáneo o tierra","Agua","Una hoja de papel","Algodón o tus dedos"],"pasos":["Mezcla un poquito de café con agua para hacer 'pintura' café.","Moja tus dedos en la pintura y dibuja animales o manos en el papel.","Déjalo secar, ¡parecerá una pintura de las cavernas!"]},tarjetas:[
     {e:"🏛️", t:"El pasado deja huellas", x:"El pasado deja pistas: casas antiguas, monumentos, herramientas viejas y cuentos de los abuelos."},
     {e:"🖼️", t:"El patrimonio", x:"El patrimonio son los tesoros del pasado que cuidamos: iglesias antiguas, plazas, música y hasta comidas tradicionales."},
     {e:"🔍", t:"¿Cómo conocemos la historia?", x:"Conocemos el pasado con fotos, objetos en museos, documentos viejos y las historias que nos cuentan los mayores."},
@@ -406,7 +419,8 @@ const TEMAS = [
     {p:"Tradición", d:"Una costumbre que pasa de los abuelos a los papás y a los hijos."},
     {p:"Región", d:"Una parte de un país con características parecidas."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"El Baúl de las Tradiciones","materiales":["Caja pequeña","Objetos simbólicos de tu familia"],"pasos":["Pregúntale a tus papás por un objeto antiguo que sea importante para la familia.","Guárdalo en la caja junto con un dibujo tuyo sobre una costumbre que tengan (como la cena de Navidad o un paseo).","Escribe por qué es importante no olvidar esas costumbres."]},tarjetas:[
     {e:"🏠", t:"Costumbres de familia", x:"Cada familia tiene sus costumbres: reunirse los domingos, cantar en los cumpleaños o hacer un plato especial."},
     {e:"👵", t:"Se pasan de generación", x:"Las tradiciones se heredan: los abuelos las enseñan a los papás y ellos a los hijos."},
     {e:"🪗", t:"Cada región es distinta", x:"En cada región hay bailes, músicas y trajes diferentes: la cumbia en la costa, el bambuco en el interior, el joropo en los llanos."},
@@ -431,7 +445,8 @@ const TEMAS = [
     {p:"Carnaval", d:"Una fiesta con disfraces, comparsas, música y desfiles."},
     {p:"Celebrar", d:"Hacer una fiesta por algo especial."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Máscara de Carnaval","materiales":["Cartón o cartulina","Tijeras","Lana, colores, escarcha"],"pasos":["Dibuja el contorno de una máscara o antifaz en el cartón y recórtalo (pide ayuda para los ojos).","Decora la máscara con muchos colores, simulando el Carnaval de Barranquilla o Blancos y Negros.","¡Póntela y baila una cumbia!"]},tarjetas:[
     {e:"🎭", t:"Carnaval de Barranquilla", x:"En la costa se celebra el Carnaval de Barranquilla, con disfraces, bailes y desfiles. ¡Es enorme y muy alegre!"},
     {e:"🌸", t:"Feria de las Flores", x:"En Medellín se hace la Feria de las Flores, donde los campesinos cargan hermosos arreglos llamados silletas."},
     {e:"🎨", t:"Carnaval de Negros y Blancos", x:"En Pasto se pintan de negro y blanco para celebrar la amistad entre todas las personas."},
@@ -460,7 +475,8 @@ const TEMAS = [
     {p:"Plato típico", d:"Una comida especial que representa a una región."},
     {p:"Ingrediente", d:"Cada cosa que se usa para preparar una comida."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Mini Chef: Plato Típico","materiales":["Plastilina de colores o ingredientes reales (con ayuda de un adulto)"],"pasos":["Elige un plato típico colombiano (Bandeja Paisa, Ajiaco, Arepas).","Modélalo con plastilina en un platico de juguete.","(Opcional) Ayuda a tu familia a preparar arepas de verdad para la cena."]},tarjetas:[
     {e:"🥘", t:"Ajiaco y bandeja paisa", x:"En el interior se come el ajiaco (una sopa con papa y pollo) y la bandeja paisa (con frijol, arroz, carne y arepa)."},
     {e:"🐟", t:"Sabores de la costa", x:"En la costa se disfruta pescado frito, arroz con coco y patacón. ¡Sabores del mar!"},
     {e:"🌽", t:"La arepa, en todas partes", x:"La arepa, hecha de maíz, se come en casi toda Colombia, de muchas formas distintas."},
@@ -486,7 +502,8 @@ const TEMAS = [
     {p:"Presente", d:"Lo que pasa ahora mismo."},
     {p:"Futuro", d:"Lo que va a pasar, todavía no ha ocurrido."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Reloj de Rutinas","materiales":["Plato de cartón","Marcador","Gancho mariposa (opcional) o chiche"],"pasos":["Dibuja los números del reloj en el plato.","En lugar de solo horas, dibuja qué haces en ese momento: dormir, desayunar, estudiar, jugar.","Ponle dos flechas de cartón en el centro para marcar tu rutina de hoy."]},tarjetas:[
     {e:"⏮️", t:"El pasado", x:"El pasado es lo que ya pasó: cuando eras bebé, cuando tus papás eran niños, cuando nacieron tus abuelos."},
     {e:"⏺️", t:"El presente", x:"El presente es AHORA: lo que haces hoy, en este momento, como aprender sociales."},
     {e:"⏭️", t:"El futuro", x:"El futuro es lo que va a pasar: tu próximo cumpleaños, cuando seas grande, lo que harás mañana."},
@@ -515,7 +532,8 @@ const TEMAS = [
     {p:"Semana", d:"Un grupo de 7 días."},
     {p:"Mes", d:"Un pedazo del año; el año tiene 12 meses."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Mi Calendario de Fechas Importantes","materiales":["Una hoja grande","Regla","Colores"],"pasos":["Dibuja una cuadrícula de 7 columnas y 5 filas.","Escribe los días de la semana arriba y llena los números del mes actual.","Dibuja una torta en los días de cumpleaños o una estrella en los días divertidos."]},tarjetas:[
     {e:"🗓️", t:"El calendario nos organiza", x:"El calendario nos ayuda a saber qué día es, cuándo hay cumpleaños o cuándo empiezan las vacaciones."},
     {e:"7️⃣", t:"7 días en una semana", x:"La semana tiene 7 días: lunes, martes, miércoles, jueves, viernes, sábado y domingo."},
     {e:"1️⃣2️⃣", t:"12 meses en un año", x:"El año tiene 12 meses, desde enero hasta diciembre. ¡Y 365 días!"},
@@ -540,7 +558,8 @@ const TEMAS = [
     {p:"Siglo", d:"Un grupo de 100 años."},
     {p:"Línea de tiempo", d:"Un dibujo que muestra hechos en orden, del más antiguo al más nuevo."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Línea de Tiempo de mi Vida","materiales":["Varias hojas de papel pegadas a lo largo","Cinta","Colores"],"pasos":["Dibuja una línea larga que atraviese todo el papel.","Al inicio, dibuja cuando naciste y escribe el año.","En el medio, dibuja tu primer día de colegio. Al final, dibuja cómo eres hoy con tu edad actual."]},tarjetas:[
     {e:"🔟", t:"La década", x:"Una década son 10 años. Tú tienes menos de una década de edad... ¡todavía!"},
     {e:"💯", t:"El siglo", x:"Un siglo son 100 años. Tus tatarabuelos vivieron hace más de un siglo."},
     {e:"➡️", t:"La línea de tiempo", x:"En una línea de tiempo ponemos los hechos en orden: primero lo más antiguo y al final lo más nuevo."},
@@ -565,7 +584,8 @@ const TEMAS = [
     {p:"Siembra", d:"Poner las semillas en la tierra."},
     {p:"Horario", d:"El tiempo organizado para hacer cada actividad."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"De la Semilla al Pan","materiales":["Semillas (lentejas o frijoles)","Algodón","Un vasito"],"pasos":["Pon el algodón húmedo en el vaso y coloca la semilla.","Ponlo cerca a la ventana. Vas a ver cuánto tiempo tarda la naturaleza en producir alimento.","Anota cada día si ves un cambio. ¡La agricultura toma tiempo!"]},tarjetas:[
     {e:"🌱", t:"El ciclo del cultivo", x:"Para tener comida hay un ciclo: primero se siembra, luego la planta crece, y después se cosecha."},
     {e:"⏰", t:"Horarios de trabajo", x:"Las personas organizan su tiempo: el panadero madruga, la tienda abre a cierta hora, el colegio tiene su horario."},
     {e:"🌦️", t:"Depende del tiempo", x:"Muchos trabajos dependen del clima y las estaciones: se siembra cuando llueve y se cosecha cuando está listo."},
@@ -591,7 +611,8 @@ const TEMAS = [
     {p:"Indígena", d:"Los pueblos que vivían en América antes de que llegaran los europeos."},
     {p:"Afrocolombiano", d:"Personas colombianas descendientes de africanos."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Mi Silueta Divertida","materiales":["Papel periódico grande o muchas hojas unidas","Lápiz","Colores"],"pasos":["Acuéstate sobre el papel y pídele a alguien que dibuje tu silueta.","Adentro de tu silueta, dibuja o escribe las cosas que te hacen única y especial.","Coloréala y pégala en la puerta de tu cuarto."]},tarjetas:[
     {e:"🧑🏽‍🤝‍🧑🏾", t:"Un país de muchos", x:"Colombia está formada por muchos grupos: indígenas, afrocolombianos, raizales, gitanos (Rrom) y mestizos."},
     {e:"🪶", t:"Los pueblos indígenas", x:"Los indígenas son los primeros habitantes. Hoy existen muchos pueblos, como los Wayúu, Nasa y Emberá."},
     {e:"🥁", t:"Los afrocolombianos", x:"Los afrocolombianos aportan música, bailes y sabores, sobre todo en las costas Pacífica y Caribe."},
@@ -620,7 +641,8 @@ const TEMAS = [
     {p:"Hogar", d:"El lugar donde vive una familia."},
     {p:"Respeto", d:"Tratar bien a los demás aunque sean diferentes."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"El Árbol de mi Familia","materiales":["Cartulina","Marcadores","Pintura verde (opcional)"],"pasos":["Dibuja el tronco de un árbol grande.","Pon el nombre de tus abuelos en las raíces, de tus papás en las ramas, y el tuyo en las hojas altas.","Si tienes pintura, usa tu huella digital para hacer las hojas del árbol."]},tarjetas:[
     {e:"🗣️", t:"Muchas lenguas", x:"En Colombia se habla español, pero también muchas lenguas indígenas y el creole de San Andrés."},
     {e:"👨‍👩‍👧‍👦", t:"Familias diferentes", x:"Hay familias grandes y pequeñas: con abuelos, con un solo papá o mamá, con tíos. ¡Todas son valiosas!"},
     {e:"🛖", t:"Hogares distintos", x:"Las casas también cambian: apartamentos en la ciudad, casas de campo, malocas o palafitos junto al agua."},
@@ -649,7 +671,8 @@ const TEMAS = [
     {p:"Cultura", d:"La forma de vivir de un grupo: su comida, música, lengua y costumbres."},
     {p:"Aprender", d:"Conocer cosas nuevas."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Mapa de mis Vecinos","materiales":["Hoja","Lápices de colores"],"pasos":["Dibuja tu casa en el centro de la hoja.","Dibuja las casas o edificios de tus vecinos alrededor.","Marca con una 'X' dónde vive un amigo o un lugar importante de tu cuadra (el parque, la tienda)."]},tarjetas:[
     {e:"🤝", t:"Vivir juntos", x:"En un barrio, un colegio o un país viven personas de muchas culturas. Convivir es hacerlo en paz."},
     {e:"🎁", t:"Aprender del otro", x:"De otras culturas aprendemos comidas nuevas, palabras, juegos y formas de ver el mundo."},
     {e:"🌐", t:"El mundo es grande", x:"Más allá de Colombia hay muchísimos países y culturas. ¡El mundo es enorme y variado!"},
@@ -674,7 +697,8 @@ const TEMAS = [
     {p:"Saberes", d:"Los conocimientos que tiene un grupo de personas."},
     {p:"Ancestral", d:"Muy antiguo, que viene de nuestros antepasados."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Collar Indígena de Macarrones","materiales":["Fideos tipo macarrón o penne","Hilo o lana","Pinturas"],"pasos":["Pinta los fideos de diferentes colores vibrantes.","Una vez secos, pásalos por el hilo para crear un collar.","Recuerda que los indígenas elaboran hermosas artesanías con materiales de la naturaleza."]},tarjetas:[
     {e:"🌽", t:"Alimentos que nos dieron", x:"Los pueblos indígenas nos enseñaron a cultivar y comer maíz, papa, yuca, cacao y muchas frutas."},
     {e:"🧺", t:"Saberes y artesanías", x:"Aportan tejidos, mochilas, cerámica y conocimientos sobre plantas que curan."},
     {e:"🌳", t:"Cuidar la naturaleza", x:"Los indígenas nos enseñan a respetar y cuidar la tierra, los ríos y los bosques."},
@@ -704,7 +728,8 @@ const TEMAS = [
     {p:"Alcaldía", d:"La oficina que dirige el municipio."},
     {p:"Servicio público", d:"Algo que ayuda a todos: agua, luz, aseo, salud."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Construyo mi Alcaldía","materiales":["Caja de zapatos","Colores","Tijeras"],"pasos":["Usa la caja para hacer el edificio principal de tu municipio (la Alcaldía).","Hazle una puerta y ponle un letrero grande.","Adentro puedes poner muñecos que sean el alcalde trabajando."]},tarjetas:[
     {e:"🏙️", t:"¿Qué es un municipio?", x:"Un municipio es el pueblo o ciudad donde vivimos. Colombia tiene más de mil municipios."},
     {e:"🏛️", t:"La alcaldía", x:"La alcaldía dirige el municipio. Se encarga de que todo funcione: las calles, los parques y la limpieza."},
     {e:"🚰", t:"Servicios para todos", x:"El municipio ayuda a que tengamos agua, luz, recolección de basura, colegios y hospitales."},
@@ -733,7 +758,8 @@ const TEMAS = [
     {p:"Concejo", d:"Grupo de personas que hacen las normas del municipio."},
     {p:"Personero", d:"La persona que defiende los derechos de la gente del municipio."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Medalla al Buen Ciudadano","materiales":["Cartón","Cinta o hilo","Papel aluminio o color amarillo"],"pasos":["Recorta un círculo de cartón y fórralo con aluminio o píntalo de amarillo.","Escribe 'Buen Ciudadano'.","Entrégale la medalla a alguien de tu casa que siempre ayuda a los demás."]},tarjetas:[
     {e:"🧑‍💼", t:"El alcalde o alcaldesa", x:"El alcalde es el líder del municipio. Toma decisiones para mejorar la vida de todos los vecinos."},
     {e:"👥", t:"El concejo", x:"El concejo es un grupo de personas (los concejales) que crean las normas del municipio y vigilan al alcalde."},
     {e:"🛡️", t:"El personero", x:"El personero cuida que se respeten los derechos de las personas del municipio."},
@@ -758,7 +784,8 @@ const TEMAS = [
     {p:"Voto", d:"La forma de elegir marcando en un papel a quién queremos."},
     {p:"Democracia", d:"Un sistema donde el pueblo elige y decide."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Caja de Votación","materiales":["Una caja pequeña con tapa","Papelitos","Esfero"],"pasos":["Hazle una ranura a la tapa de la caja para que entren los papelitos (una urna).","Haz una votación familiar: ¿Qué película ver hoy? Cada uno escribe su voto.","Mete los votos, cuéntalos y respeta la película ganadora."]},tarjetas:[
     {e:"🗳️", t:"¿Qué son las elecciones?", x:"En las elecciones, las personas adultas votan para escoger a sus líderes, como el alcalde."},
     {e:"✅", t:"El voto", x:"Votar es elegir. Cada persona marca en un papel a quién quiere que la represente. ¡Cada voto cuenta!"},
     {e:"⚖️", t:"La democracia", x:"En una democracia, el pueblo decide. Se elige a los líderes y se respetan las decisiones de la mayoría."},
@@ -787,7 +814,8 @@ const TEMAS = [
     {p:"Norma", d:"Una regla que ayuda a vivir mejor en grupo."},
     {p:"Bien común", d:"Lo que es bueno para todos, no solo para uno."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"El Bastón de la Palabra","materiales":["Un palito de madera o un tubo de cartón","Lana, colores o cintas"],"pasos":["Decora el palo con la lana o colores para que quede muy bonito.","Úsenlo en la mesa: Solo puede hablar quien tenga el bastón en la mano.","Esto enseña a escuchar y respetar los turnos en democracia."]},tarjetas:[
     {e:"🙋", t:"Tu voz importa", x:"Participar es dar tu opinión y ayudar a decidir. ¡Los niños también pueden participar en su casa y colegio!"},
     {e:"📏", t:"Las normas nos ayudan", x:"Las normas son reglas que nos ayudan a convivir: respetar el turno, cuidar los parques, no botar basura."},
     {e:"🌍", t:"El bien común", x:"Pensar en el bien común es buscar lo mejor para todos, no solo para uno mismo."},
@@ -813,7 +841,8 @@ const TEMAS = [
     {p:"Gobernador", d:"La persona que dirige un departamento."},
     {p:"Poder público", d:"Las personas y grupos que gobiernan y hacen cumplir las leyes."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"La Balanza de la Justicia","materiales":["Un gancho de ropa (percha)","Dos vasos de plástico","Cuerda"],"pasos":["Amarra un vaso a cada lado del gancho con la cuerda.","Cuélgalo en algún lado. Esa es la balanza de la Rama Judicial.","Pon objetos en los vasos para intentar que queden perfectamente equilibrados (justos)."]},tarjetas:[
     {e:"🗺️", t:"¿Qué es un departamento?", x:"Colombia se divide en departamentos. Cada uno reúne varios municipios. ¡Hay 32 departamentos!"},
     {e:"🧑‍💼", t:"El gobernador", x:"Así como el municipio tiene alcalde, el departamento tiene un gobernador que lo dirige."},
     {e:"🏛️", t:"Tres poderes", x:"El poder se reparte en tres: uno gobierna (ejecutivo), otro hace las leyes (legislativo) y otro hace justicia (judicial)."},
@@ -842,7 +871,8 @@ const TEMAS = [
     {p:"Educación", d:"Aprender; los colegios nos la brindan."},
     {p:"Comunidad", d:"El conjunto de personas que viven juntas."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Cartel por los Derechos","materiales":["Un octavo de cartulina","Marcadores","Recortes de revistas"],"pasos":["Haz un cartel grande que diga: '¡Tengo derecho a jugar y estudiar!'.","Pega recortes de niños jugando o estudiando alrededor.","Pégalo en un lugar visible de tu casa."]},tarjetas:[
     {e:"🏥", t:"Salud para todos", x:"El gobierno construye hospitales y puestos de salud para que las personas se puedan curar."},
     {e:"🏫", t:"Educación", x:"Los colegios y escuelas ayudan a que todos los niños puedan aprender. ¡Estudiar es un derecho!"},
     {e:"🛣️", t:"Vías y transporte", x:"El departamento cuida carreteras que unen los municipios, para viajar y llevar productos."},
@@ -867,7 +897,8 @@ const TEMAS = [
     {p:"Ciudadano", d:"Una persona que es parte de una comunidad y tiene derechos y deberes."},
     {p:"Veeduría", d:"Vigilar que los líderes hagan bien su trabajo."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"Megáfono de Opinión","materiales":["Cartulina","Cinta adhesiva"],"pasos":["Enrolla la cartulina formando un cono y pégala con cinta para que no se abra.","Decóralo con marcadores.","Úsalo para decir en voz alta (sin gritar muy fuerte) una buena idea para mejorar tu casa."]},tarjetas:[
     {e:"💬", t:"Expresar lo que pienso", x:"Todos podemos dar nuestra opinión con respeto: en la casa, el colegio y la comunidad."},
     {e:"👂", t:"Escuchar a los demás", x:"Participar no es solo hablar; también es escuchar las ideas de otros, aunque sean distintas."},
     {e:"👀", t:"Estar pendientes", x:"Los ciudadanos vigilan que los líderes cumplan sus promesas. Eso se llama veeduría."},
@@ -896,7 +927,8 @@ const TEMAS = [
     {p:"Conflicto", d:"Un desacuerdo o pelea entre personas."},
     {p:"Diálogo", d:"Hablar para entenderse y resolver un problema."}
   ],
-  tarjetas:[
+  
+  manualidad: {"titulo":"La Paloma de la Paz","materiales":["Hoja de papel blanco","Tijeras","Lápiz"],"pasos":["Dibuja el contorno de tu mano en el papel blanco y recórtalo.","El dedo pulgar es la cabeza de la paloma, y los demás dedos son las alas.","Dibújale un ojo, un pico y llévala volando por la casa en señal de paz."]},tarjetas:[
     {e:"🕊️", t:"¿Qué es la paz?", x:"La paz es vivir tranquilos, sin violencia, respetándonos y ayudándonos entre todos."},
     {e:"🗣️", t:"Resolver hablando", x:"Cuando hay un conflicto, lo mejor es el diálogo: hablar con calma y escuchar para encontrar una solución."},
     {e:"🤝", t:"Perdonar y acordar", x:"Pedir disculpas, perdonar y llegar a acuerdos ayuda a arreglar los problemas sin pelear."},

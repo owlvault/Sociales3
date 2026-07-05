@@ -178,6 +178,53 @@ function confeti(){
   }
 }
 
+/* --- Motor TDAH: Sonidos y Reacciones (NUEVO) --- */
+const AudioCTX = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function playTone(freq, type, duration) {
+  if (estado.ajustes.reduce) return;
+  if (!audioCtx) {
+    try { audioCtx = new AudioCTX(); } catch(e) { return; }
+  }
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+const SFX = {
+  click: () => playTone(600, 'sine', 0.1),
+  success: () => { playTone(400, 'square', 0.1); setTimeout(()=>playTone(600, 'square', 0.2), 100); },
+  reveal: () => playTone(300, 'triangle', 0.3),
+  error: () => playTone(150, 'sawtooth', 0.3)
+};
+
+function reaccionarAvatar(emocion, mensaje = "") {
+  const avatar = document.getElementById('avatar');
+  const bubble = document.getElementById('avatar-bubble');
+  if(!avatar || estado.ajustes.reduce) return;
+  
+  avatar.className = ''; 
+  avatar.classList.add('avatar-' + emocion);
+  
+  if (mensaje) {
+    bubble.textContent = mensaje;
+    bubble.classList.remove('oculto');
+    setTimeout(() => bubble.classList.add('oculto'), 3000);
+  }
+  
+  setTimeout(() => {
+    avatar.className = 'avatar-idle';
+  }, emocion === 'excited' ? 1500 : 3000);
+}
+
 /* Guardar y Cargar a Archivo (JSON local) */
 function exportarProgreso() {
   const data = JSON.stringify(estado, null, 2);
@@ -328,6 +375,7 @@ function iniciarSesion(idx){
     steps.push({t:'sabias'});
     if(estado.ajustes.pausas) steps.push({t:'pausa'});
     steps.push({t:'actividad', modo:'practicar'});
+    if(tema.manualidad) steps.push({t:'manualidad'});
   } else { /* repaso */
     if(estado.ajustes.pausas){ steps.push({t:'reto1'}); steps.push({t:'pausa'}); steps.push({t:'reto2'}); }
     else steps.push({t:'actividad', modo:'repaso'});
@@ -378,6 +426,7 @@ function mostrarPaso(){
   if(p.t==='actividad') return pintaActividad(p.modo);
   if(p.t==='reto1') return pintaActividad('repaso', 0);
   if(p.t==='reto2') return pintaActividad('repaso', 1);
+  if(p.t==='manualidad') return pintaManualidad(tema);
   if(p.t==='cierre') return pintaCierre();
 }
 
@@ -398,6 +447,57 @@ function pintaIntro(d,tema){
     </div>`;
 }
 
+function pintaCierre(){
+  clearInterval(tempTimer);
+  const puntos=10; const monedas=5;
+  sumar(puntos, monedas);
+  
+  app.innerHTML = cabeceraSesion() + `
+    <div class="tarjeta slide-up" style="background:linear-gradient(135deg,var(--primario-suave),#fff)">
+      <h2>¡Misión Cumplida! 🥳</h2>
+      <div style="font-size:3rem; margin:10px 0;">🌟</div>
+      <p style="font-size:1.2rem; color:var(--primario-osc);">¡Eres genial! Lo lograste.</p>
+      <div class="stats-fin">
+        <div><span class="emoji">⭐</span> +${puntos} XP</div>
+        <div><span class="emoji">🪙</span> +${monedas}</div>
+      </div>
+      <div class="acciones"><button class="btn-grande pulse-anim" onclick="salirSesion()">Volver al Mapa</button></div>
+    </div>`;
+  hablar("¡Misión cumplida! Eres genial, lo lograste.");
+  tirarConfeti();
+}
+
+/* --- Actividad Manual --- */
+function pintaManualidad(tema){
+  const m = tema.manualidad;
+  if (!m) return avanzar();
+  
+  app.innerHTML = cabeceraSesion() + `
+    <div class="tarjeta slide-up">
+      <span class="etiqueta pulse-anim">¡Manos a la Obra! 🎨</span>
+      <div class="grande-emoji">✂️</div>
+      <h3>${esc(m.titulo)}</h3>
+      
+      <div style="text-align:left; background:var(--bg); border-radius:14px; padding:16px; margin:15px 0;">
+        <h4 style="color:var(--primario-osc); margin-bottom:8px;">Materiales:</h4>
+        <ul style="padding-left:20px; font-size:1.1rem; color:var(--tinta);">
+          ${m.materiales.map(x=>`<li>${esc(x)}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div style="text-align:left;">
+        <h4 style="color:var(--primario-osc); margin-bottom:8px;">Instrucciones:</h4>
+        <ol style="padding-left:20px; font-size:1.1rem; color:var(--tinta);">
+          ${m.pasos.map(x=>`<li style="margin-bottom:8px;">${esc(x)}</li>`).join('')}
+        </ol>
+      </div>
+
+      <div class="acciones"><button class="btn-grande" onclick="avanzar()">¡Actividad Completada! 👉</button></div>
+    </div>`;
+    
+  hablar("¡Manos a la obra! " + m.titulo);
+}
+
 /* --- Video de Youtube Curado --- */
 function pintaVideo(tema) {
   app.innerHTML = cabeceraSesion() + `
@@ -412,40 +512,104 @@ function pintaVideo(tema) {
 }
 
 
-/* --- Tarjeta de enseñanza (Caja Misteriosa) --- */
+/* --- Tarjeta Interactiva (Motor TDAH) --- */
 function pintaTarjeta(tema, k){
-  const c=tema.tarjetas[k], total=tema.tarjetas.length;
+  const c = tema.tarjetas[k], total = tema.tarjetas.length;
+  const modo = c.modo || 'tocar'; // 'tocar', 'mantener'
+  
+  let htmlMecanica = '';
+  
+  if (modo === 'mantener') {
+    htmlMecanica = `
+      <div id="zonaInteraccion" class="caja-misteriosa" style="user-select:none; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+        <div style="font-size:4rem; margin-bottom:10px;">${c.e}</div>
+        <div>MANTÉN PRESIONADO PARA DESCUBRIR</div>
+        <div style="width:100%; height:12px; background:rgba(0,0,0,0.2); border-radius:10px; margin-top:20px; overflow:hidden;">
+          <div id="barraMantener" style="width:0%; height:100%; background:#00f260; transition: width 0.1s;"></div>
+        </div>
+      </div>
+    `;
+  } else {
+    htmlMecanica = `
+      <div id="zonaInteraccion" class="caja-misteriosa" onclick="tocarMision()">
+        <div style="font-size:4rem; margin-bottom:10px;">🎁</div>
+        <div>¡TOCA RÁPIDO PARA ABRIR!</div>
+      </div>
+    `;
+  }
+
   app.innerHTML = cabeceraSesion() + `
     <div class="tarjeta" id="tarjetaContenedor">
-      <span class="etiqueta">Aprendo · ${k+1} de ${total}</span>
+      <span class="etiqueta">Misión · ${k+1} de ${total}</span>
       
-      <div id="cajaMisteriosa" class="caja-misteriosa" onclick="tocarCaja()">
-        <div style="font-size:4rem; margin-bottom:10px;">🎁</div>
-        <div>¡Toca 3 veces para abrir!</div>
-      </div>
+      ${htmlMecanica}
 
       <div id="contenidoTarjeta" style="display:none;" class="tarjeta-revelada">
         <div class="grande-emoji">${c.e}</div>
         <h3>${esc(c.t)}</h3>
         <p>${esc(c.x)}</p>
         ${botonLeer(c.t+'. '+c.x)}
-        <div class="acciones"><button class="btn-grande" onclick="avanzar()">Siguiente 👉</button></div>
+        <div class="acciones"><button class="btn-grande" onclick="avanzarMision()">¡Misión Cumplida! 👉</button></div>
       </div>
     </div>`;
     
+  if (modo === 'mantener') {
+    let intervalo = null;
+    let progreso = 0;
+    const zona = $('#zonaInteraccion');
+    const iniciar = () => {
+      if(progreso >= 100) return;
+      SFX.click();
+      reaccionarAvatar('thinking', '¡Sigue así!');
+      intervalo = setInterval(() => {
+        progreso += 5;
+        $('#barraMantener').style.width = progreso + '%';
+        if (progreso >= 100) {
+          clearInterval(intervalo);
+          revelar();
+        }
+      }, 50);
+    };
+    const detener = () => { 
+      clearInterval(intervalo); 
+      if(progreso > 0 && progreso < 100) { 
+        progreso=0; $('#barraMantener').style.width = '0%'; SFX.error(); reaccionarAvatar('idle');
+      } 
+    };
+    
+    zona.addEventListener('mousedown', iniciar);
+    zona.addEventListener('mouseup', detener);
+    zona.addEventListener('mouseleave', detener);
+    zona.addEventListener('touchstart', (e)=>{ e.preventDefault(); iniciar(); }, {passive:false});
+    zona.addEventListener('touchend', detener);
+  } else {
     let toques = 0;
-    window.tocarCaja = () => {
+    window.tocarMision = () => {
       toques++;
-      const caja = $('#cajaMisteriosa');
-      if (toques === 1) { caja.classList.add('toque-1'); }
+      SFX.click();
+      const caja = $('#zonaInteraccion');
+      if (toques === 1) { caja.classList.add('toque-1'); reaccionarAvatar('thinking', '¡Casi!'); }
       if (toques === 2) { caja.classList.add('toque-2'); }
       if (toques >= 3) {
-        caja.style.display = 'none';
-        $('#contenidoTarjeta').style.display = 'block';
-        confeti();
-        ganarXP(5);
+        revelar();
       }
     };
+  }
+
+  function revelar() {
+    $('#zonaInteraccion').style.display = 'none';
+    $('#contenidoTarjeta').style.display = 'block';
+    SFX.reveal();
+    confeti();
+    reaccionarAvatar('excited', '¡Excelente!');
+    ganarXP(10);
+    hablar("¡Misión completada!");
+  }
+  
+  window.avanzarMision = () => {
+    SFX.click();
+    avanzar();
+  };
 }
 
 /* --- Vocabulario clave (Burbujas) --- */

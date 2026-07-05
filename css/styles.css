@@ -6,24 +6,24 @@
    ==================================================================== */
 
 :root{
-  --bg:#eef6fc;
-  --bg-card:rgba(255, 255, 255, 0.85);
-  --tinta:#243b53;
-  --tinta-suave:#5b7288;
-  --primario:#0099ff;
-  --primario-osc:#0077cc;
-  --acento:#ffb020;
-  --acento-osc:#d99518;
-  --ok:#20c965;
-  --ok-bg:#e6f8ee;
-  --mal:#ff5a5f;
-  --mal-bg:#ffe9ea;
-  --linea:#d4e5f2;
-  --sombra:0 8px 30px rgba(0, 100, 200, 0.12);
-  --sombra-hover:0 12px 40px rgba(0, 100, 200, 0.2);
-  --radio:24px;
-  --fuente:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
-  --paso:.3s;
+  --bg: #1a1a2e; /* Fondo oscuro espacial/profundo */
+  --bg-card: rgba(255, 255, 255, 0.1); /* Glassmorphism oscuro */
+  --tinta: #ffffff;
+  --tinta-suave: #a9b0c0;
+  --primario: #00d2ff; /* Neón cyan */
+  --primario-osc: #3a7bd5;
+  --acento: #ff007f; /* Neón pink */
+  --acento-osc: #d10068;
+  --ok: #00f260;
+  --ok-bg: rgba(0, 242, 96, 0.15);
+  --mal: #ff4b2b;
+  --mal-bg: rgba(255, 75, 43, 0.15);
+  --linea: rgba(255, 255, 255, 0.2);
+  --sombra: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --sombra-hover: 0 12px 40px 0 rgba(0, 210, 255, 0.4);
+  --radio: 24px;
+  --fuente: 'Nunito', 'Outfit', system-ui, sans-serif;
+  --paso: .3s;
 }
 /* Modo bajo estímulo: menos saturación, sin degradados fuertes */
 body.calma{ --bg:#f3f5f7; --primario:#5b86a6; --acento:#c9a24b; }
@@ -143,10 +143,18 @@ body.calma .hero{ background:#eef2f5; }
 
 /* Glassmorphism panel */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(12px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--sombra);
+}
+
+.glass-panel-dark {
+  background: rgba(10, 10, 25, 0.8) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 /* ---------- Mapa de aventura (semanas) ---------- */
@@ -327,3 +335,56 @@ body.calma .pausa{ background:#f1efe8; }
 /* Confeti simple */
 .confeti{ position:fixed; top:-20px; z-index:60; border-radius:2px; animation:cae linear forwards; pointer-events: none; font-weight: 800; }
 @keyframes cae{ to{ transform:translateY(105vh) rotate(var(--rot-end, 360deg)); opacity:0; } }
+
+/* --- NUEVO: Fondo Animado y Avatar (Gamificación y TDAH) --- */
+
+/* Fondo espacial dinámico */
+.animated-bg {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1; overflow: hidden; background: var(--bg);
+}
+.blob {
+  position: absolute; filter: blur(80px); opacity: 0.5;
+  border-radius: 50%; animation: float-blob 20s infinite ease-in-out alternate;
+}
+.blob-1 { width: 400px; height: 400px; background: #3a7bd5; top: -100px; left: -100px; animation-delay: 0s; }
+.blob-2 { width: 500px; height: 500px; background: #ff007f; bottom: -200px; right: -100px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: #00d2ff; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -10s; }
+
+@keyframes float-blob {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(100px, 50px) scale(1.2); }
+  100% { transform: translate(-50px, 100px) scale(0.9); }
+}
+
+/* Contenedor del Avatar (Guía) */
+.avatar-container {
+  position: fixed; bottom: 20px; right: 20px; z-index: 40;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+#avatar {
+  font-size: 3.5rem; width: 70px; height: 70px;
+  background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50%; display: grid; place-items: center;
+  backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+#avatar:active { transform: scale(0.9); }
+.avatar-idle { animation: float-avatar 3s ease-in-out infinite; }
+.avatar-excited { animation: bounce 0.5s ease infinite; background: rgba(0, 242, 96, 0.2) !important; box-shadow: 0 0 30px rgba(0, 242, 96, 0.6) !important; }
+.avatar-thinking { animation: wiggle 2s ease-in-out infinite; }
+
+@keyframes float-avatar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.avatar-bubble {
+  background: var(--bg-card); color: white;
+  padding: 12px 18px; border-radius: 20px 20px 0 20px;
+  font-weight: 700; max-width: 200px; text-align: center;
+  border: 1px solid var(--linea); backdrop-filter: blur(10px);
+  box-shadow: var(--sombra);
+  animation: popOut 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
